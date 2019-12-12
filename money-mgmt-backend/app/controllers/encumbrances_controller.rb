@@ -1,0 +1,2 @@
+class EncumbrancesController < ApplicationController
+end

@@ -10,7 +10,72 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_12_155739) do
+ActiveRecord::Schema.define(version: 2019_12_12_204050) do
+
+  create_table "budgets", force: :cascade do |t|
+    t.integer "wedding_id"
+    t.integer "venue", default: 0
+    t.integer "catering", default: 0
+    t.integer "photography", default: 0
+    t.integer "videography", default: 0
+    t.integer "flowers", default: 0
+    t.integer "cake", default: 0
+    t.integer "dress_attire", default: 0
+    t.integer "band", default: 0
+    t.integer "dj_mc", default: 0
+    t.integer "invitations", default: 0
+    t.integer "favors", default: 0
+    t.integer "officiant", default: 0
+    t.integer "beauty", default: 0
+    t.integer "jewelry", default: 0
+    t.integer "rentals", default: 0
+    t.integer "other", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["wedding_id"], name: "index_budgets_on_wedding_id"
+  end
+
+  create_table "color_palettes", force: :cascade do |t|
+    t.integer "wedding_id"
+    t.string "primary"
+    t.string "secondary"
+    t.string "accent1"
+    t.string "accent2"
+    t.string "accent3"
+    t.string "accent4"
+    t.string "accent5"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["wedding_id"], name: "index_color_palettes_on_wedding_id"
+  end
+
+  create_table "encumbrances", force: :cascade do |t|
+    t.integer "savings_plan_id"
+    t.string "name"
+    t.integer "amount"
+    t.string "frequency"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["savings_plan_id"], name: "index_encumbrances_on_savings_plan_id"
+  end
+
+  create_table "jwt_blacklist", force: :cascade do |t|
+    t.string "jti", null: false
+    t.datetime "exp", null: false
+    t.index ["jti"], name: "index_jwt_blacklist_on_jti"
+  end
+
+  create_table "savings_plans", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "pay_period_type"
+    t.integer "income_per_pp"
+    t.integer "recommended"
+    t.integer "custom_amount"
+    t.integer "projected"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_savings_plans_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false

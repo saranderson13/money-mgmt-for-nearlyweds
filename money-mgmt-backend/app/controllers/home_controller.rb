@@ -1,7 +1,7 @@
-# class HomeController < ApplicationController
+class HomeController < ApplicationController
 
-#     def index
+    def index
+        render json:  { message: "Welcome Home!" }
+    end
 
-#     end
-
-# end
+end

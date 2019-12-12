@@ -1,0 +1,83 @@
+TO DO: 
+
+WEDNESDAY 12/11:
+[x] Finish taking notes from JWT Walkthrough 1
+[x] Finish mapping out associations
+[x] Create repo + Front/Backend Directories
+[x] Generate backend api
+
+THURSDAY 12/12:
+[x] Set up Gemfile
+[x] Create all models (except maybe colors?)
+[x] Add some methods for accessing distinct users
+[ ] Create some seed data
+[x] Test all associations
+[ ] Set up error handling in Application Controller
+[ ] Finish setting up JWT
+[ ] Create specs for testing JWT
+[ ] Test token creation and blacklisting in browser
+
+
+
+
+[ ] 
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
