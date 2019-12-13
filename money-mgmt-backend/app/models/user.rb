@@ -10,7 +10,7 @@ class User < ApplicationRecord
          jwt_revocation_strategy: JwtBlacklist
 
   belongs_to :wedding
-  has_one :savings_plan
+  has_one :savings_plan, dependent: :destroy
   has_many :encumbrances, through: :savings_plan
   has_one :budget, through: :wedding
 

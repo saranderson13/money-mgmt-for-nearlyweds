@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
-  resources :color_palettes
-  resources :budgets
-  resources :encumbrances
-  resources :savings_plans
-  resources :weddings
+
+  resources :savings_plans do 
+    resources :encumbrances
+  end
+
+  resources :weddings do 
+    resources :color_palettes
+    resources :budgets
+  end
+
   # devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
