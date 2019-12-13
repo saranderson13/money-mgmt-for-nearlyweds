@@ -10,12 +10,19 @@ THURSDAY 12/12:
 [x] Set up Gemfile
 [x] Create all models (except maybe colors?)
 [x] Add some methods for accessing distinct users
-[ ] Create some seed data
+[x] Create some seed data
 [x] Test all associations
-[ ] Set up error handling in Application Controller
-[ ] Finish setting up JWT
-[ ] Create specs for testing JWT
-[ ] Test token creation and blacklisting in browser
+[x] Set up error handling in Application Controller
+[x] Create app/errors directory & AuthorizationError class
+[x] Add authorization and signup spec files
+
+
+starting at step 25
+
+FRIDAY 12/13
+[ ] Rspec tests for Authorization (all passing)
+[ ] Rspec tests for Signup (all passing)
+[ ] Token creation and blacklisting testing in browser (no cors errors)
 
 
 
