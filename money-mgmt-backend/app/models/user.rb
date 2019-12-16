@@ -15,4 +15,5 @@ class User < ApplicationRecord
   has_one :budget, through: :wedding
 
 
+
 end

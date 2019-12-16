@@ -1,11 +1,14 @@
 class ApplicationController < ActionController::API
 
-    rescue_from ActiveRecord::RecordNotFound, with: :not_found
-    rescue_from AuthenticationError, with: :unauthorized_error
+    include ActionController::MimeResponds
+    respond_to :json
 
-    def render_resource(resource)
+    rescue_from ActiveRecord::RecordNotFound, with: :not_found
+    rescue_from AuthorizationError, with: :unauthorized_error
+
+    def render_resource(resource, with: nil)
         if resource.errors.empty?
-            render json: resource
+            render json: resource, include: with
         else
             validation_error(resource)
         end
@@ -25,11 +28,11 @@ class ApplicationController < ActionController::API
     end
 
     def unauthorized_error
-        render json: { message: "No access authorization." }, status: 404
+        render json: { message: "No access authorization." }, status: 401
     end
 
     def not_found
-        render json: { message: "Resource not found."}
+        render json: { message: "Resource not found."}, status: 404
     end
 
     def authorize_user_resource(resource)

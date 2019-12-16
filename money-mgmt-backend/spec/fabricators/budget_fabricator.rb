@@ -1,18 +1,18 @@
 Fabricator(:budget) do
-  venue        1
-  catering     1
-  photography  1
-  videography  1
-  flowers      1
-  cake         1
-  dress_attire 1
-  band         1
-  dj_mc        1
-  invitations  1
-  favors       1
-  officiant    ""
-  beauty       1
-  jewelry      1
-  rentals      1
-  other        1
+  venue        { rand(0..15000) }
+  catering     { rand(0..15000) }
+  photography  { rand(0..1000) }
+  videography  { rand(0..1000) }
+  flowers      { rand(0..1000) }
+  cake         { rand(0..1000) }
+  dress_attire { rand(0..5000) }
+  band         { rand(0..3000) }
+  dj_mc        { rand(0..3000) }
+  invitations  { rand(0..1000) }
+  favors       { rand(0..2000) }
+  officiant    { rand(0..500) }
+  beauty       { rand(0..1000) }
+  jewelry      { rand(0..2000) }
+  rentals      { rand(0..5000) }
+  other        { rand(0..3000) }
 end

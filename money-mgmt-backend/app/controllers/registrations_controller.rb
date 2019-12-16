@@ -4,12 +4,15 @@ class RegistrationsController < Devise::RegistrationsController
 
     def create
         begin
-            super
+            super do |user| 
+                @user.wedding = Wedding.create()
+                @user.save
+            end
         rescue ActiveRecord::RecordInvalid => e
             render_resource(e.record)
         rescue ActiveRecord::RecordNotUnique => e
             err = OpenStruct.new(errors: {user: 'Already Exists'})
-            validation.error(err)
+            validation_error(err)
         end
     end
 
