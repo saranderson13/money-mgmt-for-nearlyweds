@@ -25,16 +25,15 @@ SATURDAY 12/14
 [x] Rspec tests for Authorization (login/logout) (all passing)
 [x] Rspec tests for Signup (all passing)
 
+
 MONDAY 12/16
 [x] Rspec tests for owned object (authorized creation/editing) (all passing)
 [x] Token creation and blacklisting testing in browser (no cors errors)
-[ ] Lingering 201 error
+[x] Lingering 201 error
 
-
-
-
-[ ] 
-[ ]
+TUESDAY 12/17
+[ ] Create signup page
+[ ] Create login page
 [ ]
 [ ]
 [ ]

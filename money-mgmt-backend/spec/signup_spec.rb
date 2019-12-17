@@ -17,10 +17,9 @@ RSpec.describe 'POST /signup', type: :request do
     context 'When user is unauthenticated' do
         before { post url, params: params }
 
-        # THIS TEST WILL PASS IF EXPECTING 201 (successful creation)
-        it 'returns 200' do 
-            binding.pry
-            expect(response.status).to eq 200
+        it 'returns 201' do 
+            # 201 = successful creation, meaning account was created.
+            expect(response.status).to eq 201
         end
 
         it 'returns a JWT' do
