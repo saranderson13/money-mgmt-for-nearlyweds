@@ -32,7 +32,12 @@ MONDAY 12/16
 [x] Lingering 201 error
 
 TUESDAY 12/17
-[ ] Create signup page
+[x] Create signup page
+
+WEDNESDAY 12/18
+[x] Debug signup page js
+[ ] Alter user class to have first & last name, not just name
+[ ] Enable actual signup
 [ ] Create login page
 [ ]
 [ ]
