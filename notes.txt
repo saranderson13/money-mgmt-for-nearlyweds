@@ -70,13 +70,49 @@ res.headers.get('authorization')
 
 
 
+SIGNUP FETCH REQUEST EXAMPLE
+const resp = fetch('http://localhost:3000/signup', {
+    method: "POST",
+    headers: { 
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+		user: {
+            first_name: "Sarah",
+            last_name: "Anderson",
+            role: "Bride",
+            email: "sarah@example.com",
+            password: "password",
+        },
+        wedding: {
+            date: "2021-05-15",
+			website: "anderson-bailey-wedding.com",
+			registry: "anderson-bailey-registry.com",
+			guest_count: 200
+        }
+    })
+})
 
-
-
-
-
-
-
+const resp2 = fetch('http://localhost:3000/signup', {
+    method: "POST",
+    headers: { 
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+		user: {
+            first_name: "Cameron",
+            last_name: "Bailey",
+            role: "Groom",
+            email: "cameron@example.com",
+            password: "password",
+        },
+        partner: {
+            email: "sarah@example.com"
+        }
+    })
+})
 
 
 

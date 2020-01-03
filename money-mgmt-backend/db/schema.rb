@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_12_204050) do
+ActiveRecord::Schema.define(version: 2020_01_03_003219) do
 
   create_table "budgets", force: :cascade do |t|
     t.integer "wedding_id"
@@ -83,11 +83,12 @@ ActiveRecord::Schema.define(version: 2019_12_12_204050) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "name"
     t.string "role"
     t.integer "wedding_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name"
+    t.string "last_name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["wedding_id"], name: "index_users_on_wedding_id"
@@ -95,8 +96,6 @@ ActiveRecord::Schema.define(version: 2019_12_12_204050) do
 
   create_table "weddings", force: :cascade do |t|
     t.datetime "date"
-    t.string "website"
-    t.string "registry"
     t.integer "guest_count"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -6,6 +6,9 @@ class Wedding < ApplicationRecord
     has_many :encumbrances, through: :savings_plans
     has_one :color_palette, dependent: :destroy
 
+    validates :date, presence: true
+    validates :guest_count, presence: true
+
     
 
     def brides 
@@ -23,6 +26,8 @@ class Wedding < ApplicationRecord
     def format_couple
         
     end
+
+
 
 
 end
