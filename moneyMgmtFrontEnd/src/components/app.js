@@ -6,7 +6,9 @@ class App {
             // All routes are created here.
             'welcome': new WelcomePage(this.pageContainer, this.adapter),
             'login': new LoginPage(this.pageContainer, this.adapter),
-            'signup': new SignupPage(this.pageContainer, this.adapter)
+            'signup': new SignupPage(this.pageContainer, this.adapter),
+            'profile': new ProfilePage(this.pageContainer, this.adapter),
+            'wedding': new WeddingPage(this.pageContainer, this.adapter)
         })
         this.router.assignCallback(this.pageManagerRedirect.bind(this))
         this.renderPage('welcome')

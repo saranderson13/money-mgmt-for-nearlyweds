@@ -21,7 +21,6 @@ class LoginAdapter {
         })
         this.baseAdapter.checkStatus(resp);
         this.baseAdapter.token = resp.headers.get('authorization').split(" ")[1]
-        console.log(this.baseAdapter.token)
     }
 
 

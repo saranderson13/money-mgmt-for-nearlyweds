@@ -1,6 +1,6 @@
 class SignupAdapter {
 
-    constructor(baseAdapter) {
+    constructor(baseAdapter){
         this.baseAdapter = baseAdapter;
         this.baseURL = this.baseAdapter.baseURL;
     }
@@ -21,8 +21,6 @@ class SignupAdapter {
         })
         this.baseAdapter.checkStatus(resp);
         this.baseAdapter.token = resp.headers.get('authorization').split(" ")[1]
-        console.log(this.baseAdapter.token)
-        // return await resp.json();
     }
 
 }

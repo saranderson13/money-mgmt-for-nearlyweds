@@ -14,7 +14,7 @@ class SignupPage extends PageManager{
         this.form.addEventListener('submit', this.handleSubmit.bind(this))
     }
 
-    handleSubmit(e) {
+    async handleSubmit(e) {
         e.preventDefault()
         const weddingFormRadio = document.getElementById('partnerPendingRadio')
         const partnerFormRadio = document.getElementById('partnerExistsRadio')
@@ -34,11 +34,17 @@ class SignupPage extends PageManager{
             params.wedding.date = inputs[6].value
             params.wedding.guest_count = inputs[7].value
         } else if(partnerFormRadio.checked) {
+            console.log(params)
             params.partner= {}
             params.partner.email = inputs[6].value
         }
-
-        this.adapter.signup(params)
+        try{
+            await this.adapter.signup(params)
+            this.redirect('wedding');
+        } catch(err) {
+            alert(err)
+        }
+        
     }
 
     setRadioListeners() {

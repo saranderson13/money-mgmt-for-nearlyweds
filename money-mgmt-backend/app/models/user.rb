@@ -37,6 +37,11 @@ class User < ApplicationRecord
          jwt_revocation_strategy: JwtBlacklist
 
 
+  def userDoesNotExist?
+    # binding.pry
+    !User.find_by(email: self.email)
+  end
+
   def assign_wedding_if_not_full(wedding)
     if wedding.users.length < 2
       self.wedding = wedding

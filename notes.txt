@@ -116,7 +116,51 @@ const resp2 = fetch('http://localhost:3000/signup', {
 
 
 
+STEPS FOR CREATING A NEW PAGE:
+01. Create the page manager:
+    IN TERMINAL: touch src/pageManagers/[_pageName_].js
+    IN FILE:
+        class [_PageName_]Page extends PageManager {
 
+            constructor(container, adapter) {
+                super(container)
+                this.adapter = new [_PageName_]Adapter(adapter);
+            }
+
+            initBindingsAndEventListeners() {
+                [Find and add event listeners to any elements here]
+                [NOTE: only for elements in the staticHTML]
+                [      dynamic ones will need to be set later]
+            }
+
+            get staticHTML() {
+                return (`
+                    [Insert Static HTML Here]
+                `)
+            }
+        }
+
+02. Create the page adapter:
+    IN TERMINAL: touch src/adapters/decorators/[_pageName_]Adapter.js
+    IN FILE:
+        class [_PageName_]Adapter {
+
+            constructor(baseAdapter){
+                this.baseAdapter = baseAdapter
+                this.baseURL = this.baseAdapter.baseURL
+            }
+
+            get token() {
+                return this.baseAdapter.token;
+            }
+
+            get headers() {
+                return this.baseAdapter.headers;
+            }
+        }
+
+03. Add adapter and page manager to index.html
+04. Add route into app.js constructor
 
 
 

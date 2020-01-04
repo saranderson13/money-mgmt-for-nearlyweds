@@ -12,6 +12,7 @@ class BaseAdapter {
         }
 
         if (this.token) {
+            console.log(baseheaders)
             baseheaders = { ...baseHeaders, "Authorization": `Bearer ${this.token}` }
         }
         return baseHeaders
