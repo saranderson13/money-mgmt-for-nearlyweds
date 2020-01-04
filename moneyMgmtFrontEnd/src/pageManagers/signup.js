@@ -1,11 +1,13 @@
 class SignupPage extends PageManager{
 
+    // #render IS NOT NECESSARY BECAUSE CLASS EXTENDS FROM PageManager
+    // Radio listeners are set in #initBindingsAndEventListners()
 
-    // constructor(container, adapter) {
-    //     this.container = container;
-    //     this.adapter = new SignupAdapter(adapter);
-    // }
-
+    constructor(container, adapter) {
+        super(container)
+        this.adapter = new SignupAdapter(adapter)
+    }
+    
     initBindingsAndEventListeners() {
         this.form = this.container.querySelector('#signup-form')
         this.setRadioListeners()
@@ -37,20 +39,7 @@ class SignupPage extends PageManager{
         }
 
         this.adapter.signup(params)
-        // console.log(params)
     }
-
-    // render() {
-    //     // This renders the content that contains the elements that need listeners.
-    //     // Before this is called, those elements don't exist.
-    //     this.container.innerHTML = this.staticHTML()
-
-    //     // This sets the listeners once the elements exist.
-    //     this.setRadioListeners()
-
-    //     // Make any database fetches
-    //     // update page with dynamic html
-    // }
 
     setRadioListeners() {
         // This gets the elements that need listeners.
@@ -87,7 +76,7 @@ class SignupPage extends PageManager{
         }
     }
 
-    staticHTML() {
+    get staticHTML() {
         return (`
             <h2>Signup</h2>
             <form id="signup-form">

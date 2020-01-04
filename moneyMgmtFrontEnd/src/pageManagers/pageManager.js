@@ -1,16 +1,17 @@
 class PageManager {
 
-    constructor(container, adapter) {
+    constructor(container) {
         this.container = container
-        this.adapter = new SignupAdapter(adapter)
     }
 
     fetchAndRenderPageResources() {
         return null
     }
 
+    // Individual page managers will need to have versions of #staticHTML(), 
+    // #initBindingsAndEventListners(), and optionally #fetchAndRenderPageResources()
     render() {
-        this.container.innerHTML = this.staticHTML()
+        this.container.innerHTML = this.staticHTML
         this.initBindingsAndEventListeners()
         this.fetchAndRenderPageResources()
     }

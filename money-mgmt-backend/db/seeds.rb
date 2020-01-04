@@ -12,9 +12,7 @@ Wedding.destroy_all
 
 
 deez_nups = Wedding.create(
-    date: DateTime.new(2021, 5, 15,  0,  0,  0), 
-    website: "anderson-bailey-wedding.com", 
-    registry: "example-registry.com",
+    date: DateTime.new(2021, 5, 15,  0,  0,  0),
     guest_count: 200
 )
 
