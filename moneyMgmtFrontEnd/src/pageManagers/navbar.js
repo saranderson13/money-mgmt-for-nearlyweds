@@ -13,16 +13,25 @@ class Navbar extends PageManager{
         this.container.addEventListener('click', this.handleClick.bind(this))
     }
 
-    handleClick(e){
+    async handleClick(e){
         if(e.target.tagName === "A") {
             e.preventDefault()
             if (e.target.id != 'logout-link') {
                 const route = e.target.id.split('-')[0]
                 if (route !== this.currentPage() ) { this.redirect(route) }
             } else {
-                this.adapter.token = null
+                try {
+                    this.handleLogout()
+                } catch {
+                    this.redirect('welcome')
+                }
             }
         }
+    }
+
+    handleLogout() {
+        this.adapter.token = null
+        throw new AuthorizationError("Logout Successful")
     }
 
     get staticHTML() {
