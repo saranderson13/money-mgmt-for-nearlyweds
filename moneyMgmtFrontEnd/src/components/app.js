@@ -12,6 +12,9 @@ class App {
             'signup': new SignupPage(this.pageContainer, this.adapter),
             'profile': new ProfilePage(this.pageContainer, this.adapter),
             'wedding': new WeddingPage(this.pageContainer, this.adapter),
+            'budget': new BudgetPage(this.pageContainer, this.adapter),
+            'encumbrances': new EncumbrancesPage(this.pageContainer, this.adapter),
+            'savings': new SavingsPage(this.pageContainer, this.adapter)
         })
 
         this.router.assignAlertHandler(this.handleAlert.bind(this))

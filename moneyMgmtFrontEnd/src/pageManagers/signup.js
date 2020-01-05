@@ -34,7 +34,6 @@ class SignupPage extends PageManager{
             params.wedding.date = inputs[6].value
             params.wedding.guest_count = inputs[7].value
         } else if(partnerFormRadio.checked) {
-            console.log(params)
             params.partner= {}
             params.partner.email = inputs[6].value
         }

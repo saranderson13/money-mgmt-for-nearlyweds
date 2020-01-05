@@ -5,21 +5,20 @@ class RegistrationsController < Devise::RegistrationsController
     def create
         begin
             super do |user|
-                @user = user
-                if @user.userDoesNotExist?
+                if user.userDoesNotExist?
                     if params["partner"] == nil
                         newWedding = Wedding.create(date: params["wedding"]["date"], guest_count: params["wedding"]["guest_count"])
-                        @user.assign_wedding_if_not_full(newWedding)
+                        user.assign_wedding_if_not_full(newWedding)
                     else
                         partner = User.find_by(email: params["partner"]["email"])
                         if partner != nil
                             wedding = partner.wedding
-                            @user.assign_wedding_if_not_full(wedding)
+                            user.assign_wedding_if_not_full(wedding)
                         else
                             raise InvalidPartnerError.new
                         end
                     end
-                    @user.save
+                    user.save
                 end
             end
         rescue UserExistsError => e
