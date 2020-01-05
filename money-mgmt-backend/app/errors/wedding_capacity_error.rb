@@ -1,0 +1,3 @@
+class WeddingCapacityError < StandardError
+
+end

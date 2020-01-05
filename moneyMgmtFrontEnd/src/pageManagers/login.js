@@ -20,7 +20,7 @@ class LoginPage extends PageManager {
             await this.adapter.login(params)
             this.redirect('wedding');
         } catch(err) {
-            alert(err)
+            this.handleAlert(err, 'danger')
         }
     }
 

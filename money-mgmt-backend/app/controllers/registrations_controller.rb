@@ -6,7 +6,6 @@ class RegistrationsController < Devise::RegistrationsController
         begin
             super do |user|
                 @user = user
-                # binding.pry
                 if @user.userDoesNotExist?
                     if params["partner"] == nil
                         newWedding = Wedding.create(date: params["wedding"]["date"], guest_count: params["wedding"]["guest_count"])
@@ -17,20 +16,20 @@ class RegistrationsController < Devise::RegistrationsController
                             wedding = partner.wedding
                             @user.assign_wedding_if_not_full(wedding)
                         else
-                            @user.errors.add(:wedding, 'Partner email not valid')
+                            raise InvalidPartnerError.new
                         end
                     end
-                    # binding.pry
                     @user.save
-                else
-                    binding.pry
                 end
             end
+        rescue UserExistsError => e
+            validation_error(OpenStruct.new(errors: 'An account with that email already exists.'))
+        rescue WeddingCapacityError => e
+            validation_error(OpenStruct.new(errors: 'A wedding may not have more than two users.'))
+        rescue InvalidPartnerError => e
+            validation_error(OpenStruct.new(errors: 'Partner email does not exist.'))
         rescue ActiveRecord::RecordInvalid => e
             render_resource(e.record)
-        rescue ActiveRecord::RecordNotUnique => e
-            err = OpenStruct.new(errors: {user: 'Already Exists'})
-            validation_error(err)
         end
     end
 

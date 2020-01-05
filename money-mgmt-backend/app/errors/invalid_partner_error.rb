@@ -1,0 +1,2 @@
+class InvalidPartnerError < StandardError
+end

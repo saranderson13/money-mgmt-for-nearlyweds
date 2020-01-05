@@ -19,7 +19,7 @@ class LoginAdapter {
             headers: this.headers,
             body: JSON.stringify(params)
         })
-        this.baseAdapter.checkStatus(resp);
+        await this.baseAdapter.checkStatus(resp);
         this.baseAdapter.token = resp.headers.get('authorization').split(" ")[1]
     }
 

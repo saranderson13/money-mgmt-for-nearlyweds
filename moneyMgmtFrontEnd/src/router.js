@@ -22,12 +22,51 @@ class Router {
     // ex: 'welcome'
     // This function is called inside #renderPage(), which is defined in app.js
     render(page) {
-        this.routes[page].render() 
+        // It uses the page's own #render(), which is inherited from pageManager.js
+        this.routes[page].render()
+
+        // Because 'navbar' is not a route, it needs to be specifically rendered.
+        if(this.navbar) { this.navbar.render() }
+
+        // Every time a page is rendered the currentPage instance variable is updated.
+        // the currentPage becomes the string that is passed in as an argument.
+        // Without this, clicking the link for the page that is already rendered
+        // will create some weird endless loop.
+        this.currentPage = page
     }
 
-    assignCallback(callback) {
+    assignRedirect(callback) {
+        this.assignCallback(callback, 'redirect')
+    }
+
+    assignAlertHandler(callback) {
+        this.assignCallback(callback, 'handleAlert')
+    }
+
+    // In app.js, assigns the #pageManagerRedirect function to each route as #redirect
+    // so anywhere that this.redirect('pageName') is called, #pageManagerRedirect
+    // is triggered, and renders the appropriate page.
+    assignCallback(callback, name) {
         for(let route in this.routes) {
-            this.routes[route].redirect = callback
+            this.routes[route][name] = callback
+        }
+        // Because 'navbar' is not technically a route, this specifically assigns 
+        // the callback for the navbar
+        if(this.navbar) { this.navbar.redirect = callback }
+    }
+
+    assignNavbar(navbar) {
+        this.navbar = navbar
+        // When the navbar is created, the currentPage is assigned via a callback,
+        // the navbar.currentPage gets the value from the router instance's currentPage,
+        // which is redefined whenever a new page is loaded.
+        // so the navbar and the router both know the current page.
+        // in the navbar pageManager, when a new click is handled, (in #handlClick)
+        // the page is only redirected if navbar.currentPage does not equal the target.
+        this.navbar.currentPage = () => {
+            return this.currentPage
         }
     }
+
+
 }

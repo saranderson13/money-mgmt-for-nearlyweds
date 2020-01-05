@@ -42,7 +42,7 @@ class SignupPage extends PageManager{
             await this.adapter.signup(params)
             this.redirect('wedding');
         } catch(err) {
-            alert(err)
+            this.handleAlert(err, 'danger')
         }
         
     }

@@ -38,15 +38,19 @@ class User < ApplicationRecord
 
 
   def userDoesNotExist?
-    # binding.pry
-    !User.find_by(email: self.email)
+    attemptedEmail = User.find_by(email: self.email)
+    if (attemptedEmail != nil) 
+      raise UserExistsError.new
+    else 
+      return true
+    end
   end
 
   def assign_wedding_if_not_full(wedding)
     if wedding.users.length < 2
       self.wedding = wedding
     else
-      self.errors.add(:wedding, "cannot have more than two users.")
+      raise WeddingCapacityError.new
     end
   end
   

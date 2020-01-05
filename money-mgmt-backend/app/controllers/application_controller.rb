@@ -9,6 +9,7 @@ class ApplicationController < ActionController::API
     before_action :configure_permitted_parameters, if: :devise_controller?
 
     def render_resource(resource, with: nil)
+        binding.pry
         if resource.errors.empty?
             render json: resource, include: with
         else
@@ -27,6 +28,7 @@ class ApplicationController < ActionController::API
                 }
             ]
         }, status: :bad_request
+        # binding.pry
     end
 
     def unauthorized_error
