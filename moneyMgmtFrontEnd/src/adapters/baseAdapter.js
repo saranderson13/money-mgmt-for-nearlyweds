@@ -22,7 +22,7 @@ class BaseAdapter {
         if(resp.status < 200 || resp.status > 299) {
             const msg = await resp.json()
             let errorMsg = msg.error
-            if (!errorMsg) { errorMsg = msg.errors.detail || msg.errors[0].detail }
+            if (!errorMsg) { errorMsg = msg.errors.detail }
             throw new Error(errorMsg);
         }
     }

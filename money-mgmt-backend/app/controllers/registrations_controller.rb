@@ -26,7 +26,7 @@ class RegistrationsController < Devise::RegistrationsController
         rescue WeddingCapacityError => e
             validation_error(OpenStruct.new(errors: 'A wedding may not have more than two users.'))
         rescue InvalidPartnerError => e
-            validation_error(OpenStruct.new(errors: 'Partner email does not exist.'))
+            validation_error(OpenStruct.new(errors: 'Partner account does not exist.'))
         rescue ActiveRecord::RecordInvalid => e
             render_resource(e.record)
         end
