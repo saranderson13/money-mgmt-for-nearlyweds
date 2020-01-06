@@ -17,8 +17,8 @@ class App {
             'savings': new SavingsPage(this.pageContainer, this.adapter)
         })
 
-        this.router.assignAlertHandler(this.handleAlert.bind(this))
         this.router.assignNavbar(new Navbar(this.navbarContainer, this.adapter))
+        this.router.assignAlertHandler(this.handleAlert.bind(this))
         this.router.assignRedirect(this.pageManagerRedirect.bind(this))
         this.renderPage('welcome')
     }

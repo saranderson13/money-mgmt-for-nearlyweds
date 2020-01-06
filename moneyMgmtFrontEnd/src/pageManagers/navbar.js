@@ -28,6 +28,7 @@ class Navbar extends PageManager{
     
     handleLogout() {
         this.adapter.token = null
+        this.handleAlert("Logout Successful", "success")
         this.redirect('welcome')
     }
 
