@@ -13,13 +13,4 @@ class ProfileAdapter {
         return this.baseAdapter.headers;
     }
 
-    async getWedding() {
-        const resp = await fetch(`${this.baseURL}/wedding`, {
-            method: 'GET',
-            headers: this.headers
-        })
-        this.baseAdapter.checkStatus(resp)
-        return await resp.json()
-    }
-
 }

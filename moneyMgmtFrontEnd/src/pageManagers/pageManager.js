@@ -4,7 +4,7 @@ class PageManager {
         this.container = container
     }
 
-    fetchAndRenderPageResources() {
+    async fetchAndRenderPageResources() {
         return null
     }
 
@@ -14,6 +14,11 @@ class PageManager {
         this.container.innerHTML = this.staticHTML
         this.initBindingsAndEventListeners()
         this.fetchAndRenderPageResources()
+    }
+
+    handleAuthorizationError(err) {
+        console.log("If you were expecting to hit the 401 in handleError, you did.")
+        this.redirect('welcome')
     }
 
 }

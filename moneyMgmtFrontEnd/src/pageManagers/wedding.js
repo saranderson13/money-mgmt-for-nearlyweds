@@ -9,6 +9,15 @@ class WeddingPage extends PageManager {
         return null
     }
 
+    async fetchAndRenderPageResources() {
+        try {
+            const wedding = await this.adapter.getWedding()
+            this.container.innerHTML = wedding.date
+        } catch (err) {
+            this.handleAuthorizationError()
+        }
+    }
+
     get staticHTML() {
         return (`
             <h1>Wedding Page</h1>
