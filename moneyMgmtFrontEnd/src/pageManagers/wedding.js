@@ -18,6 +18,15 @@ class WeddingPage extends PageManager {
         }
     }
 
+    async fetchAssociatedResources() {
+        try {
+
+        } catch {
+            // throw new AuthenticationError()
+            // THROW ERROR?
+        }
+    }
+
     get staticHTML() {
         return (`
             <h1>Wedding Page</h1>

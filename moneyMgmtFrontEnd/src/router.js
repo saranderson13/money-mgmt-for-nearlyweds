@@ -4,7 +4,7 @@ class Router {
     // When the router is created in app.js, all page routes are passed as key-value pairs
     // ex: { 'welcome': new WelcomePage(this.pageContainer, this.adapter) }
     // Above example will create a new WelcomePage when either of these two functions are called:
-    // #this.renderPage('welcome')
+    // #this.router.render('welcome')
     // #this.pageManagerRedirect('welcome')
     // (this being the App object)
 
@@ -20,7 +20,7 @@ class Router {
     
     // The page argument will be a string representing the name of the route
     // ex: 'welcome'
-    // This function is called inside #renderPage(), which is defined in app.js
+    // This function is called inside #pageManagerRedirect(), which is defined in app.js
     render(page) {
         // It uses the page's own #render(), which is inherited from pageManager.js
         this.routes[page].render()

@@ -1,3 +1,67 @@
+THE ROLES OF ADAPTERS, PAGE MANAGERS, THE ROUTER, & APP.JS
+
+ - APP.JS constructs the main application object. When the app object is constructed, the following things happen:
+    - a base adapter is assigned. When a page does not have an adapter of it's own, it inherits the baseAdapter
+    - Bindings and Event Listeners are set for the HTML from the index.html files - meaning only the default containers.
+    - An alert manager is created in the alertContainer
+    - A router is created. This is where all routes are instantiated. Note that route does not mean url in this instance, but rather a page to be loaded. It is similar to a url route because it is how the application knows which information to load, but technically it is being loaded into the existing application, not a newly rendered page.
+    - The navbar is created separately, but also assigned to the router. There is no 'navbar' route, as in you could not click a button for the navbar and get a page with the navbar. But assigning it to the router means that it will have access to all callbacks assigned to ordinary routes - and because it is kind of like the sitemap and acts as a trigger for the router it kind of makes sense. The router will want to have access to it's navbar, and the navbar will want the abilities of other routes.
+    - Callback methods that will need to be used by every page manager are assigned. For example, all page managers will need to be able to redirect to another page, in the event of a bad authorization token, or a link within the body of their HTML. And the navbar will need that method to redirect whenever a new tab is clicked. All page managers should also be able to create alerts when necessary.
+    - Finally, the root page is rendered - this is what users will see when they first visit the application.
+
+- THE ROUTER is responsible for making the application navigatable. Routes are created via key-value pairs. When that key is called, (usually in a #redirect or #render call), the router will create a new instance of the page that the key refers to. The navbar (or wherever the link was clicked from), will then redirect to the newly created page.
+    - NOTE: #redirect is actually a callback function that is given to all page managers. It is derived from #pageManagerRedirect (defined in app.js). That function utilizes the #render function defined in the router. THAT #render function utlizes the page manager's own #render function, which in most cases is inherited from the pageManager. Below is the path of that function because that was confusing as heck.
+
+        1. #redirect is called by a page manager.
+        2. #pageManagerRedirect is referenced from app.js
+        3. #render is referenced from the router
+        4. #render is referenced from the page manager that called redirect
+        5. If a render function is not defined there, it is inherited from the parent (pageManager.js)
+
+    - You may ask WHY THE RUNAROUND??? (Or at least you should ask that question...) The answer is - You do not want your page manager to be responsible for redirecting. You need to be able to redirect from any given page manager, but the actual definition of redirecting should not be responsibility of a page manager. It should be a routing concern. Your page manager should render whatever page it needs to - which, when it boils down to it, is really what a redirect does - it renders a new page or rather, it causes a new page to be rendered. But you want the router to do the actual routing (redirecting.) The actual functionality of #redirect is defined in the router's #render function. BUT THEN because the router is a property of the master App object, it is best for the command to really come from there, and for the app object to be the one to delegate that ability to page managers. So it utilizes the function of it's property and delegates it in a controlled way. Basically, SEPARATION OF CONCERNS. While in this case that makes it actually kind of hard to figure out where #redirect comes from, at the end of the day, the page managers are responsible for rendering themselves, the router is responsible for redirecting, and the app object is responsible for delegating.
+
+    - SO WHAT ELSE HAPPENS IN THE ROUTER?
+        - Functions to enable the assignment of #redirect and #alertHandler. 
+        - A function for those functions to use, (because there is more than one and in some cases would need to be more specific to what they were assigning, but their root behavior would alwasy be the same, so it's worth creating a function to handle the root behavior.)
+        - Assigning the navbar. This will be used in app.js for the router to assign the navbar as a property of itself. It also enables the navbar to keep track of the current page - which is crucial for not allowing an attempt to redirect to the same page you are on.
+
+- PAGE MANAGERS! A page manager is responsible for 4 specific tasks, and then a variety of tasks specifically tailored to the functionality of the page. But first...
+    - Construction: assigns a container, and an adapter.
+    - Setting up initial binding and event listeners
+    - Fetch any necessary information from the server, and render the initial HTML
+    - Define the initial (static) HTML
+
+    THEN, it is responsible for any on page changes. Such as setting listeners on dynamic content (content loaded after or in addition to the static HTML), and any manipulation of the DOM.
+
+    In the event that the page has a form, it is responsible for rendering that form, and handling what happens when it is submitted. HOWEVER, (spoiler alert) the adapter is really where the fetches are made... a page manager just awaits information and reacts accordingly.
+
+- ADAPTERS are what link page managers to the server. They are basically the controllers of the front end. Anything associated with literally making a request, is delegated to an adapter. Depending on the strategy of your application, page adapters either decorate, or extend from the base adapter. In this case, I used a decorator strategy, so page adapters are constructed by passing in the base adapter, and take on the base adapter as a property, through which they can access all of it's functionality. In an inheritance strategy they would simply inherit all of that functionality. The base adapter is responible for the following:
+    - It has a get function to create headers, which makes it super easy for page adapters to just have ready made headers.
+    - It also takes care of checking for a token, so when a page adapter asks for the headers, they will either come with the token, or not, and the page adapter can react accordingly (by throwing an Authorization error if there isn't a valid token).
+    - An async function to check the status of a response. A page adapter will make a fetch request, and then it will use this function to check the status of the response and make sure there isn't an error. If there's an error, one will be thrown, and then caught in the page manager.
+        - ASIDE: The error is caught in the page manager because that is where the fetch function is called. The page adapter has a function that does a fetch. That function uses check status. If the response has an error, it will hop out of check status, hop out of the function that called the fetch, and into the function where the fetch function was called, which is in a page manager. There it will be caught and handled.
+    
+    A typical page adapter has the following responsibilities:
+        - A function to return the current token, which it gets from the base adapter.
+        - A function to return the headers, which it gets from the base adapter.
+        - An async function to make a fetch request. For example, a form submit, or login (which is technically a form submit). A basic example of this function would have the following steps:
+            - Do a fetch request (with await) and save the response to a variable.
+            - Use the base adapter's #checkStatus to make sure it's a 200. (if it isn't, an error will be thrown, and caught in the page manager that called the fetch function)
+            - If the status is good, return whatever information the page manager was looking for. In the case of a login, return the token. In the case of anything else, return what it asked for.
+
+SUMMARY:
+    - APP.JS: The main application object. Gateway to the default body containers.
+    - ROUTER: Makes the application navigatable. Is a property of the app object, holds all routes (as kv pairs), and is responsible for redirecting 
+    - PAGE MANAGERS: Builds the page, and manages any dynamic content.
+    - ADAPTERS: The 'controllers' of the front end. They gather information from the server to provide to their respective page managers.
+
+
+
+
+
+
+
+
 BROWSER TESTING OF GETTING A TOKEN (WITH LOGIN)
 const url = 'http://localhost:3000/login'
 undefined

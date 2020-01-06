@@ -20,7 +20,7 @@ class App {
         this.router.assignNavbar(new Navbar(this.navbarContainer, this.adapter))
         this.router.assignAlertHandler(this.handleAlert.bind(this))
         this.router.assignRedirect(this.pageManagerRedirect.bind(this))
-        this.renderPage('welcome')
+        this.router.render('welcome')
     }
 
     initBindingsAndEventListeners() {
@@ -37,11 +37,6 @@ class App {
     // This on first glance looks redundant - but it enables redirect to be
     // managed by the App object as opposed to the Router.
     pageManagerRedirect(page) {
-        this.renderPage(page)
-    }
-
-    // This calls the #render function from the Router(pageManager)
-    renderPage(page) {
         this.router.render(page)
     }
 }

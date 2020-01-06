@@ -2,6 +2,7 @@ class Navbar extends PageManager{
     
     constructor(container, adapter) {
         super(container)
+        // There is no navbar adapter - it inherits the baseAdapter from the App object
         this.adapter = adapter
     }
 
@@ -24,7 +25,6 @@ class Navbar extends PageManager{
             }
         }
     }
-
     
     handleLogout() {
         this.adapter.token = null
