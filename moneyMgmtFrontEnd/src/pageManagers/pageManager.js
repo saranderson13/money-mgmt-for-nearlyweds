@@ -17,8 +17,9 @@ class PageManager {
     }
 
     handleAuthorizationError(err) {
-        console.log("If you were expecting to hit the 401 in handleError, you did.")
+        this.handleAlert(err.message, 'danger')
         this.redirect('welcome')
     }
+
 
 }

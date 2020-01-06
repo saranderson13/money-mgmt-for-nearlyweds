@@ -14,7 +14,7 @@ class WeddingPage extends PageManager {
             const wedding = await this.adapter.getWedding()
             this.container.innerHTML = wedding.date
         } catch (err) {
-            this.handleAuthorizationError()
+            this.handleAuthorizationError(err)
         }
     }
 

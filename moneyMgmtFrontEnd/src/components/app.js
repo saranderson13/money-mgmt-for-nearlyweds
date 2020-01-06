@@ -31,7 +31,6 @@ class App {
     }
 
     handleAlert(msg, type, timeout = 5000) {
-        // console.log(msg)
         this.alertManager.render(msg, type, timeout)
     }
 

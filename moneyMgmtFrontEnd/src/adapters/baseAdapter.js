@@ -21,7 +21,7 @@ class BaseAdapter {
         const msg = await resp.json()
         if (resp.status === 401) {
             this.token = null
-            throw new AuthorizationError(msg.error)
+            throw new Error(msg.error)
         } else if(resp.status < 200 || resp.status > 299) {
             let errorMsg = msg.error
             if (!errorMsg) { errorMsg = msg.errors.detail }

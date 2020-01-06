@@ -20,18 +20,15 @@ class Navbar extends PageManager{
                 const route = e.target.id.split('-')[0]
                 if (route !== this.currentPage() ) { this.redirect(route) }
             } else {
-                try {
-                    this.handleLogout()
-                } catch {
-                    this.redirect('welcome')
-                }
+                this.handleLogout()
             }
         }
     }
 
+    
     handleLogout() {
         this.adapter.token = null
-        throw new AuthorizationError("Logout Successful")
+        this.redirect('welcome')
     }
 
     get staticHTML() {
