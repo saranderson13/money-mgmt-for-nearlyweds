@@ -52,11 +52,7 @@ class Router {
         }
         // Because 'navbar' is not technically a route, this specifically assigns 
         // the callbacks for the navbar
-        if(this.navbar && name === "redirect") { 
-            this.navbar.redirect = callback 
-        } else if (this.navbar && name === "handleAlert") {
-            this.navbar.handleAlert = callback
-        }
+        if(this.navbar) { this.navbar[name] = callback }
     }
 
     assignNavbar(navbar) {
