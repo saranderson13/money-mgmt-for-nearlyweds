@@ -18,7 +18,12 @@ class RegistrationsController < Devise::RegistrationsController
                             raise InvalidPartnerError.new
                         end
                     end
+                    if user.valid?
+                        user.wedding.create_budget
+                        user.wedding.create_color_palette
+                    end
                     user.save
+                    user.create_savings_plan
                 end
             end
         rescue UserExistsError => e

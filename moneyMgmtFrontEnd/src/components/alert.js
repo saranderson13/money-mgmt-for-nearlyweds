@@ -10,7 +10,6 @@ class Alert {
     }
 
     render(msg, type, timeout) {
-        // console.log(msg)
         const html = `
             <div class="alert alert-${type}" role="alert">
                 ${msg}
