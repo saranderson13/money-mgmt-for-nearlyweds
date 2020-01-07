@@ -16,16 +16,16 @@ deez_nups = Wedding.create(
     guest_count: 200
 )
 
-deez_nups.build_budget(
+deez_nups.build_expenses(
     venue: 8000,
     catering: 5000,
     photography: 1000,
     videography: 0,
     flowers: 600,
     cake: 800,
-    dress_attire: 2500,
+    attire: 2500,
     band: 0,
-    dj_mc: 0,
+    djmc: 0,
     invitations: 500,
     favors: 700,
     officiant: 0,

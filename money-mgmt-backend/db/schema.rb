@@ -10,30 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_03_003219) do
-
-  create_table "budgets", force: :cascade do |t|
-    t.integer "wedding_id"
-    t.integer "venue", default: 0
-    t.integer "catering", default: 0
-    t.integer "photography", default: 0
-    t.integer "videography", default: 0
-    t.integer "flowers", default: 0
-    t.integer "cake", default: 0
-    t.integer "dress_attire", default: 0
-    t.integer "band", default: 0
-    t.integer "dj_mc", default: 0
-    t.integer "invitations", default: 0
-    t.integer "favors", default: 0
-    t.integer "officiant", default: 0
-    t.integer "beauty", default: 0
-    t.integer "jewelry", default: 0
-    t.integer "rentals", default: 0
-    t.integer "other", default: 0
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["wedding_id"], name: "index_budgets_on_wedding_id"
-  end
+ActiveRecord::Schema.define(version: 2020_01_07_234741) do
 
   create_table "color_palettes", force: :cascade do |t|
     t.integer "wedding_id"
@@ -57,6 +34,29 @@ ActiveRecord::Schema.define(version: 2020_01_03_003219) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["savings_plan_id"], name: "index_encumbrances_on_savings_plan_id"
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.integer "wedding_id"
+    t.integer "venue", default: 0
+    t.integer "catering", default: 0
+    t.integer "photography", default: 0
+    t.integer "videography", default: 0
+    t.integer "flowers", default: 0
+    t.integer "cake", default: 0
+    t.integer "attire", default: 0
+    t.integer "band", default: 0
+    t.integer "djmc", default: 0
+    t.integer "invitations", default: 0
+    t.integer "favors", default: 0
+    t.integer "officiant", default: 0
+    t.integer "beauty", default: 0
+    t.integer "jewelry", default: 0
+    t.integer "rentals", default: 0
+    t.integer "other", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["wedding_id"], name: "index_expenses_on_wedding_id"
   end
 
   create_table "jwt_blacklist", force: :cascade do |t|

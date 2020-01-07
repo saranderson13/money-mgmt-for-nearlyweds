@@ -129,7 +129,7 @@ class WeddingPage extends PageManager {
                     </tr>
                     <tr>
                         <td class="tableText">DJ & MC</td>
-                        <td class="tableNum" data-expense-category="dj-mc"></td>
+                        <td class="tableNum" data-expense-category="djmc"></td>
                         <td class="tableButton"><button class="editExpense" data-expense-category="dj-mc">Edit</button></td>
                     </tr>
                     <tr>
@@ -164,7 +164,7 @@ class WeddingPage extends PageManager {
                     </tr>
                     <tr>
                         <td class="tableText">Miscellaneous / Buffer</td>
-                        <td class="tableNum" data-expense-category="misc"></td>
+                        <td class="tableNum" data-expense-category="other"></td>
                         <td class="tableButton"><button class="editExpense" data-expense-category="misc">Edit</button></td>
                     </tr>
                 </table>

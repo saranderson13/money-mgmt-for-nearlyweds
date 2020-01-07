@@ -9,7 +9,7 @@ class User < ApplicationRecord
   belongs_to :wedding
   has_one :savings_plan, dependent: :destroy
   has_many :encumbrances, through: :savings_plan
-  has_one :budget, through: :wedding
+  has_one :expenses, class_name: :Expense, through: :wedding
 
   # VALIDATIONS 
   validates :email, presence: true, uniqueness: true

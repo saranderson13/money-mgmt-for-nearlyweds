@@ -1,4 +1,4 @@
-class Budget < ApplicationRecord
+class Expense < ApplicationRecord
 
     belongs_to :wedding
     has_many :users, through: :wedding

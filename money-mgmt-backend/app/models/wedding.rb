@@ -1,7 +1,7 @@
 class Wedding < ApplicationRecord
     
     has_many :users
-    has_one :budget, dependent: :destroy
+    has_one :expenses, class_name: :Expense, dependent: :destroy
     has_many :savings_plans, through: :budget
     has_many :encumbrances, through: :savings_plans
     has_one :color_palette, dependent: :destroy

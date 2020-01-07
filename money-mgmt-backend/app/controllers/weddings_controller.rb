@@ -11,7 +11,7 @@ class WeddingsController < ApplicationController
                         savings_plan: { include: :encumbrances }
                     }
                 }, 
-                budget: {}, 
+                expenses: {}, 
                 color_palette: {}
             }
         )
