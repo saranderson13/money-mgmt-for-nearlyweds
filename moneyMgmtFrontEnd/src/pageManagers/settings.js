@@ -1,8 +1,8 @@
-class BudgetPage extends PageManager {
+class SettingsPage extends PageManager {
 
     constructor(container, adapter) {
         super(container)
-        this.adapter = new BudgetAdapter(adapter);
+        this.adapter = new SettingsAdapter(adapter);
     }
 
     initBindingsAndEventListeners() {
@@ -11,7 +11,8 @@ class BudgetPage extends PageManager {
 
     get staticHTML() {
         return (`
-            <h1>Budget Page</h1>
+            <h1>Settings Page</h1>
         `)
     }
+
 }

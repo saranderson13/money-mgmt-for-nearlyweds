@@ -42,16 +42,10 @@ class Navbar extends PageManager{
                             <a class="nav-link" id="wedding-link" href="#">Wedding<span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="profile-link" href="#">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="budget-link" href="#">Budget</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="encumbrances-link" href="#">Encumbrances</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" id="savings-link" href="#">My Savings Plan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="settings-link" href="#">Settings</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="logout-link" href="#">Log Out</a>

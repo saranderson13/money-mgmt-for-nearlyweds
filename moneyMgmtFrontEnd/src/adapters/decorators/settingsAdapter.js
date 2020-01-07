@@ -1,4 +1,4 @@
-class BudgetAdapter {
+class SettingsAdapter {
 
     constructor(baseAdapter){
         this.baseAdapter = baseAdapter
@@ -12,4 +12,5 @@ class BudgetAdapter {
     get headers() {
         return this.baseAdapter.headers;
     }
+
 }
