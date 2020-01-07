@@ -36,10 +36,11 @@ deez_nups.build_budget(
 )
 
 bride = User.create(
-    name: "Sarah Anderson", 
+    first_name: "Sarah",
+    last_name: "Anderson", 
     role: "Bride", 
     wedding: deez_nups,
-    email: "sarah@example.com",
+    email: "sarah@gmail.com",
     password: "sto0fski"
 )
 
@@ -51,10 +52,11 @@ bsp.encumbrances.build(name: "internet", amount: 85, frequency: "monthly")
 bride.save
 
 groom = User.create(
-    name: "Cameron Bailey",
+    first_name: "Cameron",
+    last_name: "Bailey",
     role: "Groom",
     wedding: deez_nups,
-    email: "cameron@example.com",
+    email: "cameron@gmail.com",
     password: "sto0fski"
 )
 

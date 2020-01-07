@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content = "width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="https://fonts.googleapis.com/css?family=Abel|Nanum+Gothic+Coding|Parisienne&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/weddingStyles.css">
+    <link rel="stylesheet" href="styles/styles.css">
+
+    <!-- file references (scripts) would go here) -->
+
+    <title>Money Management for Nearlyweds</title>
+</head>
+<body>
+    <div id="app-container">
+        <div id="alert-container">
+
+        </div>
+
+        <div id="navbar-container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" id="wedding-link" href="#">Wedding<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-link" href="#">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="budget-link" href="#">Budget</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="encumbrances-link" href="#">Encumbrances</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="savings-link" href="#">My Savings Plan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="logout-link" href="#">Log Out</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div id="page-container" class="container">
+            <div id="summaryContainer">
+                <!-- Begin Top Section - wedding info -->
+                <div id="weddingInfoContainer">
+                    <div id="weddingName">
+                        Anderson-Bailey Nuptuals
+                    </div>
+                    <div id="weddingDate">
+                        May 15th, 2021
+                    </div>
+                    <div id="weddingCountdown">
+                        - countdown here -
+                    </div>
+                </div>
+            </div>
+            <!-- End Top Section -->
+
+            <!-- Begin Bottom Section - numbers tables -->
+            <div id="tablesContainer">
+
+                <!-- Begin Budget Column -->
+                <div id="budgetTableContainer">
+                    <table id="budgetTable">
+                        <th class="weddingPageTable" colspan="3">Projected Expenses</th class="weddingPageTable">
+                        <tr>
+                            <td class="tableText">Venue</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Catering</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Photography</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Videography</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Flowers</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Cake</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Gown & Tux</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Band</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">DJ & MC</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Invitations / Stationary</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Favors</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Officiant</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Salon & Beauty</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Wedding Bands</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Equipment Rentals</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Miscellaneous / Buffer</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableButton"><button class="editExpense">Edit</button></td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- End Budget Column -->
+
+
+                <!-- Begin Savings/Summary Column -->
+                <div id="rightTablesContainer">
+                    
+                    <!-- Begin Savings Table -->
+                    <div class="rightTable"><table id="savingsTable">
+                        <th class="weddingPageTable" colspan="3">Savings Summary</th>
+                        <tr>
+                            <th class="weddingPageTable"> </th>
+                            <th class="weddingPageTable">User 1</th>
+                            <th class="weddingPageTable">User 2</th>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Income per Month</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableNum">$1,000</td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Expenses per Month</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableNum">$1,000</td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Recommended Monthly Savings Goal</td>
+                            <td class="tableNum">$1,000</td>
+                            <td class="tableNum">$1,000</td>
+                        </tr>   
+                    </table></div> 
+                    <!-- End Savings Table -->
+
+
+                    <!-- Begin Summary Table -->
+                    <div class="rightTable"><table id="summaryTable">
+                        <th class="weddingPageTable" colspan="2">Summary</th>
+                        <tr>
+                            <td class="tableText">Total Projected Expenses</td>
+                            <td class="tableNum">$20,000</td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Total Current Savings</td>
+                            <td class="tableNum">$20,000</td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Remaining Needed to Meet Goal</td>
+                            <td class="tableNum">$20,000</td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Anticipated Savings on Recommended Plan</td>
+                            <td class="tableNum">$20,000</td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Bottom Line</td>
+                            <td class="tableNum">$20,000</td>
+                        </tr>
+                        <tr>
+                            <td class="tableText recommendation" colspan="2">
+                                You will need to increase the amount you save per paycheck to reach your goal.
+                            </td>
+                        </tr>
+                    </table></div>
+                    <!-- End Summary Table -->
+
+                </div>
+                <!-- End Savings/Summary Column -->
+            </div>
+            <!-- End Bottom Section -->
+        </div>
+    </div>
+</body>
+</html>
