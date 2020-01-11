@@ -13,12 +13,23 @@ class WeddingAdapter {
         return this.baseAdapter.headers;
     }
 
-    async getWedding() {
-        const resp = await fetch(`${this.baseURL}/wedding`, {
+    async getAsset(assetName) {
+        const resp = await fetch(`${this.baseURL}/${assetName}`, {
             headers: this.headers
         })
         const json = this.baseAdapter.checkStatus(resp)
         return await json
+    }
+
+    async updateExpenses(params) {
+        const resp = await fetch(`${this.baseURL}/expenses/${params.expenses.id}`, {
+            method: 'PATCH',
+            headers: this.headers,
+            body: JSON.stringify(params)
+        })
+        const json = await this.baseAdapter.checkStatus(resp)
+        return await json
+        // const await this.baseAdapter.checkStatus(resp);
     }
 
     // async getBudget

@@ -181,7 +181,94 @@ STEPS FOR CREATING A NEW PAGE:
 
 
 
-
+EXPENSE TABLE WITH INDIVIDUAL EDIT BUTTONS
+<!-- Begin Budget Column -->
+<div id="budgetTableContainer">
+    <table id="budgetTable">
+        <th class="weddingPageTable" colspan="3">Projected Expenses</th class="weddingPageTable">
+        <tr>
+            <td class="tableText">Venue</td>
+            <td class="tableNum" data-expense-category="venue"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="venue">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Catering</td>
+            <td class="tableNum" data-expense-category="catering"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="catering">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Photography</td>
+            <td class="tableNum" data-expense-category="photography"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="photography">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Videography</td>
+            <td class="tableNum" data-expense-category="videography"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="videography">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Flowers</td>
+            <td class="tableNum" data-expense-category="flowers"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="flowers">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Cake</td>
+            <td class="tableNum" data-expense-category="cake"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="cake">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Gown & Tux</td>
+            <td class="tableNum" data-expense-category="attire"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="attire">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Band</td>
+            <td class="tableNum" data-expense-category="band"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="band">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">DJ & MC</td>
+            <td class="tableNum" data-expense-category="djmc"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="dj-mc">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Invitations</td>
+            <td class="tableNum" data-expense-category="invitations"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="invitations">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Favors</td>
+            <td class="tableNum" data-expense-category="favors"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="favors">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Officiant</td>
+            <td class="tableNum" data-expense-category="officiant"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="officiant">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Salon & Beauty</td>
+            <td class="tableNum" data-expense-category="beauty"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="beauty">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Wedding Bands</td>
+            <td class="tableNum" data-expense-category="jewelry"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="jewelry">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Equipment Rentals</td>
+            <td class="tableNum" data-expense-category="rentals"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="rentals">Edit</button></td>
+        </tr>
+        <tr>
+            <td class="tableText">Miscellaneous</td>
+            <td class="tableNum" data-expense-category="other"></td>
+            <td class="tableButton"><button class="editExpense" data-expense-category="misc">Edit</button></td>
+        </tr>
+    </table>
+</div>
+<!-- End Budget Column -->
 
 
 

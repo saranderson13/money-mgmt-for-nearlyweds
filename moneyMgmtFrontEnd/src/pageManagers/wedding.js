@@ -2,20 +2,30 @@ class WeddingPage extends PageManager {
 
     constructor(container, adapter) {
         super(container)
+        this.container.parent = this
         this.adapter = new WeddingAdapter(adapter);
+        this.expenses = new ExpenseData(this.adapter)
     }
 
     initBindingsAndEventListeners() {
-        return null
+        this.expenses.setEditButtonListener();
+        this.container.addEventListener('click',function(e, ){
+            e.preventDefault()
+            if(e.target && e.target.id === 'expenseSubmit'){
+                this.parent.expenses.handleExpenseEditSubmit(e)
+             }
+         });
     }
 
     async fetchAndRenderPageResources() {
         try {
-            const wedding = await this.adapter.getWedding()
+            const wedding = await this.adapter.getAsset("wedding")
+            const expenses = await this.adapter.getAsset("expenses")
             this.insertFormattedWeddingName(wedding.users)
             this.insertWeddingDate(wedding)
             this.insertCountdown(wedding)
-
+            this.expenses.insertExpenses(expenses)
+            this.expenses.insertTotalExpenses();
         } catch (err) {
             this.handleAuthorizationError(err)
         }
@@ -25,17 +35,13 @@ class WeddingPage extends PageManager {
         const nameContainer = document.getElementById('weddingName');
         const roles = users.map( u => u.role )
         let weddingName;
-
         if (roles.length === 2) {
             if ( roles[1] === "Bride" ) {
                 weddingName = `${users[1].last_name} - ${users[0].last_name} Nuptuals`
             } else {
                 weddingName = `${users[0].last_name} - ${users[1].last_name} Nuptuals`
             }
-        } else {
-            weddingName = `${users[0].last_name} - ??? Nuptuals`
-        }
-
+        } else { weddingName = `${users[0].last_name} - ??? Nuptuals` }
         nameContainer.innerHTML = weddingName;
     }
 
@@ -43,6 +49,8 @@ class WeddingPage extends PageManager {
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         const dateContainer = document.getElementById('weddingDate')
+        // wedding.date must be split because the string from the ruby object includes timezone
+        // remove timezone to avoid the date being modified by an assumed local timezone when translated to js.
         const date = new Date(wedding.date.split(".")[0])
         const formattedDate = `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`
         dateContainer.innerHTML = `${formattedDate}`
@@ -57,9 +65,8 @@ class WeddingPage extends PageManager {
         countdownContainer.innerHTML = countdownString
     }
 
-    accessBudget(wedding) {
-        // wedding.budget.map( kv )
-        console.log(wedding.budget)
+    get getExpenses() {
+        return this.expenses
     }
 
     get staticHTML() {
@@ -83,93 +90,82 @@ class WeddingPage extends PageManager {
         <!-- Begin Bottom Section - numbers tables -->
         <div id="tablesContainer">
 
-            <!-- Begin Budget Column -->
-            <div id="budgetTableContainer">
-                <table id="budgetTable">
-                    <th class="weddingPageTable" colspan="3">Projected Expenses</th class="weddingPageTable">
-                    <tr>
-                        <td class="tableText">Venue</td>
-                        <td class="tableNum" data-expense-category="venue"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="venue">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Catering</td>
-                        <td class="tableNum" data-expense-category="catering"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="catering">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Photography</td>
-                        <td class="tableNum" data-expense-category="photography"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="photography">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Videography</td>
-                        <td class="tableNum" data-expense-category="vidography"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="vidography">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Flowers</td>
-                        <td class="tableNum" data-expense-category="flowers"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="flowers">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Cake</td>
-                        <td class="tableNum" data-expense-category="cake"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="cake">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Gown & Tux</td>
-                        <td class="tableNum" data-expense-category="attire"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="attire">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Band</td>
-                        <td class="tableNum" data-expense-category="band"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="band">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">DJ & MC</td>
-                        <td class="tableNum" data-expense-category="djmc"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="dj-mc">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Invitations / Stationary</td>
-                        <td class="tableNum" data-expense-category="invitations"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="invitations">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Favors</td>
-                        <td class="tableNum" data-expense-category="favors"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="favors">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Officiant</td>
-                        <td class="tableNum" data-expense-category="officiant"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="officiant">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Salon & Beauty</td>
-                        <td class="tableNum" data-expense-category="beauty"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="beauty">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Wedding Bands</td>
-                        <td class="tableNum" data-expense-category="jewelry"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="jewelry">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Equipment Rentals</td>
-                        <td class="tableNum" data-expense-category="rentals"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="rentals">Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText">Miscellaneous / Buffer</td>
-                        <td class="tableNum" data-expense-category="other"></td>
-                        <td class="tableButton"><button class="editExpense" data-expense-category="misc">Edit</button></td>
-                    </tr>
-                </table>
+            <!-- Begin Expense Column -->
+            <div id="expenseTableContainer">
+                <form id ="editExpenseTable">
+                    <table id="expenseTable">
+                        <th class="weddingPageTable" colspan="2">Projected Expenses</th class="weddingPageTable">
+                        <tr>
+                            <td class="tableText">Venue</td>
+                            <td class="tableNum" data-expense-category="venue"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Catering</td>
+                            <td class="tableNum" data-expense-category="catering"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Photography</td>
+                            <td class="tableNum" data-expense-category="photography"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Videography</td>
+                            <td class="tableNum" data-expense-category="videography"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Flowers</td>
+                            <td class="tableNum" data-expense-category="flowers"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Cake</td>
+                            <td class="tableNum" data-expense-category="cake"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Gown & Tux</td>
+                            <td class="tableNum" data-expense-category="attire"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Band</td>
+                            <td class="tableNum" data-expense-category="band"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">DJ & MC</td>
+                            <td class="tableNum" data-expense-category="djmc"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Invitations</td>
+                            <td class="tableNum" data-expense-category="invitations"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Favors</td>
+                            <td class="tableNum" data-expense-category="favors"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Officiant</td>
+                            <td class="tableNum" data-expense-category="officiant"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Salon & Beauty</td>
+                            <td class="tableNum" data-expense-category="beauty"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Wedding Bands</td>
+                            <td class="tableNum" data-expense-category="jewelry"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Equipment Rentals</td>
+                            <td class="tableNum" data-expense-category="rentals"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableText">Miscellaneous</td>
+                            <td class="tableNum" data-expense-category="other"></td>
+                        </tr>
+                        <tr>
+                            <td class="tableButton" colspan="2"><button class="editExpense">Edit</button></td>
+                        </tr>
+                    </table>
+                </form>
             </div>
-            <!-- End Budget Column -->
+            <!-- End Expense Column -->
 
 
             <!-- Begin Savings/Summary Column -->
@@ -185,18 +181,18 @@ class WeddingPage extends PageManager {
                     </tr>
                     <tr>
                         <td class="tableText">Income per Month</td>
-                        <td class="tableNum"data-savings-category="u1Income"></td>
-                        <td class="tableNum"data-savings-category="u2Income"></td>
+                        <td class="tableNum" data-savings-category="u1Income"></td>
+                        <td class="tableNum" data-savings-category="u2Income"></td>
                     </tr>
                     <tr>
                         <td class="tableText">Expenses per Month</td>
-                        <td class="tableNum"data-savings-category="u1Expenses"></td>
-                        <td class="tableNum"data-savings-category="u2Expenses"></td>
+                        <td class="tableNum" data-savings-category="u1Expenses"></td>
+                        <td class="tableNum" data-savings-category="u2Expenses"></td>
                     </tr>
                     <tr>
                         <td class="tableText">Recommended Monthly Savings Goal</td>
-                        <td class="tableNum"data-savings-category="u1Recommendation"></td>
-                        <td class="tableNum"data-savings-category="u2Recommendation"></td>
+                        <td class="tableNum" data-savings-category="u1Recommendation"></td>
+                        <td class="tableNum" data-savings-category="u2Recommendation"></td>
                     </tr>   
                 </table></div> 
                 <!-- End Savings Table -->

@@ -4,7 +4,7 @@ class EncumbrancesController < ApplicationController
 
 
     def index
-        # u = User.find(params[:user_id])
+        # u = User.find(1)
         # enc = u.encumbrances
         enc = current_user.encumbrances
         render json: enc.to_json

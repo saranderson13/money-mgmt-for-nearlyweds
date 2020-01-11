@@ -1,22 +1,10 @@
 Rails.application.routes.draw do
 
   get '/wedding', to: 'weddings#index'
+  get '/user', to: 'users#index'
+  resources :expenses, only: [:index, :update]
+  resources :encumbrances, except: [:new, :edit]
 
-  resources :users, only: [:show] do
-
-    # resources :savings_plans, only: [:]
-    resources :encumbrances, except: [:new, :edit]
-
-    # resources :weddings, only: [:index]
-
-    # resources :weddings, only: [:index] do 
-    #   resources :color_palettes
-    #   resources :budgets
-    # end
-
-    # get '/wedding', to: 'weddings#index'
-
-  end
 
   # devise_for :users
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

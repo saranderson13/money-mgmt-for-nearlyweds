@@ -1,9 +1,12 @@
 class UsersController < ApplicationController
 
-    def show
-        # binding.pry
-        user = User.find(params["id"])
-        render json: { message: "Hello, #{user.name}" }
+    before_action :authenticate_user!
+
+    def index
+        # user = User.find(1)
+        render json: current_user.to_json(
+            include:  [:savings_plan, :encumbrances]
+        ) 
     end
 
 end

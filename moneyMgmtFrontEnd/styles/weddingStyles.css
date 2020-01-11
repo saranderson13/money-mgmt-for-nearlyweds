@@ -32,7 +32,7 @@
     margin: 0px auto;
 }
 
-#budgetTableContainer {
+#expenseTableContainer {
     box-sizing: border-box;
     width: 40%;
     padding: 10px 15px 20px;
@@ -59,7 +59,7 @@
     margin-bottom: 10px;
 }
 
-table#budgetTable {
+table#expenseTable {
     width: 100%;
 }
 
@@ -75,7 +75,7 @@ table#summaryTable {
     background-color: #ffffff;
 }
 
-#budgetTable tr, #summaryTable tr, #savingsTable tr {
+#expenseTable tr, #summaryTable tr, #savingsTable tr {
     border-bottom: 1px solid #e2ca96;
     height: 35px;
 }
@@ -99,7 +99,8 @@ td.tableNum {
     font-family: 'Nanum Gothic Coding';
     font-size: 13px;
     letter-spacing: 2px;
-    text-align: center;
+    text-align: left;
+    padding-left: 15px;
     min-width: 100px;
 }
 
@@ -108,13 +109,14 @@ td.tableNum {
     padding-left: 30px;
 }
 
-td.recommendation {
+td.recommendation, td.tableButton {
     text-align: center;
     padding: 10px 0px;
 }
 
-button.editExpense {
+button.editExpense, input.editExpense {
     box-sizing: border-box;
+    display: block;
     align-items: center;
     -webkit-appearance: none;
     -webkit-border-vertical-spacing: 0px;
@@ -122,11 +124,11 @@ button.editExpense {
     border: none;
     border-image-width: 0px;
     display: inline;
-    vertical-align: middle;
-    font-size: 11px; line-height: 11px;
+    /* vertical-align: middle; */
+    font-size: 15px; line-height: 15px;
     font-family: 'Abel'; text-transform: uppercase;
     background-color: #f7f3ee;
-    padding: 2px 7px 1px;
+    padding: 4px 20px;
     box-shadow: 1px 1px 1px #808080;
     transition: all 0.15s linear;
 }
