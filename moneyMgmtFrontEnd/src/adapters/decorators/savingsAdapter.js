@@ -12,4 +12,25 @@ class SavingsAdapter {
     get headers() {
         return this.baseAdapter.headers;
     }
+
+    async getAsset(assetName) {
+        const resp = await fetch(`${this.baseURL}/${assetName}`, {
+            headers: this.headers
+        })
+        const json = this.baseAdapter.checkStatus(resp)
+        return await json
+    }
+
+
+    // SAVE FOR LATER
+    // async updateSavings(params) {
+    //     const resp = await fetch(`${this.baseURL}/expenses/${params.expenses.id}`, {
+    //         method: 'PATCH',
+    //         headers: this.headers,
+    //         body: JSON.stringify(params)
+    //     })
+    //     const json = await this.baseAdapter.checkStatus(resp)
+    //     return await json
+    // }
+
 }

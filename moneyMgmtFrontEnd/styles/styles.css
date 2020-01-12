@@ -1,5 +1,49 @@
+/* STYLING APPLICABLE TO ALL */
+
 body {
     background-color: #fffefb;
     height: 100%
+}
+
+#summaryContainer {
+    width: 90%;
+    margin: 50px auto 10px;
+    background-color: #f0d2d2
+}
+
+#savingsInfoContainer, #weddingInfoContainer {
+    text-align: center;
+    padding: 30px 30px 50px;  
+}
+
+#planName, #weddingName {
+    font-size: 80px;
+    font-family: 'Parisienne';
+}
+
+#tablesContainer {
+    box-sizing: border-box;
+    width: 90%; height: 100%;
+    margin: 0px auto;
+}
+
+.rightTable, .leftTable {
+    padding: 10px 15px 20px;
+    border: 1px solid #c5a45c;
+    background-color: #ffffff;
+    margin-bottom: 10px;
+}
+
+#rightTablesContainer, #leftTablesContainer {
+    box-sizing: border-box;
+    margin-bottom: 100px;
+}
+
+#rightTablesContainer {
+    float: right;
+}
+
+#leftTablesContainer {
+    float: left;
 }
 

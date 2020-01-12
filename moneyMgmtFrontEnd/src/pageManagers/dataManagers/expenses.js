@@ -38,6 +38,7 @@ class ExpenseData {
     }
 
     formatCostForDisplay(num) {
+        // Takes a number (ex: 1000) and returns a string (=> "$1,000")
         const numArray = num.toString().split("").reverse()
         const commaCount = Math.floor(numArray.length / 3)
         for (let i = commaCount; i > 0; i--) {
@@ -49,17 +50,31 @@ class ExpenseData {
     }
 
     formatCostForCalculation(string) {
+        // Takes a string (ex: "$1,000") and returns a number (=> 1000)
         return parseInt(string.replace(/[^0-9]/g, ""), 10)
     }
 
     updateSummaryTotals() {
+        // ALL SUMMARY BOX UPDATES WILL BE CALLED HERE
+        // WILL NEED ACCESS TO TOTALS FROM SAVINGS - MAY NEED TO MOVE TO WEDDING PAGE
         this.insertTotalExpenses()
+        // current savings
+        // remaining to meet goal
+        // anticipated savings to be accumulated on plan
+        // bottom line - will your anticipated savings surpass what is needed to meet goal
     }
 
     insertTotalExpenses() {
+        // Get box to insert total into
         const totalBox = document.querySelector('td[data-summary-category="totalExpenses"')
+
+        // Get boxes that hold current totals
         const numBoxes = document.querySelectorAll('td[data-expense-category]')
+
+        // Create an array of the totals, formatted as numbers
         const amounts = Array.from(numBoxes).map( b => this.formatCostForCalculation(b.innerText) )
+
+        // Insert the reduced amount from the array into the total box, formatted for display
         totalBox.innerText = this.formatCostForDisplay(`$${amounts.reduce((a, c) => a + c, 0)}`)
     }
 
@@ -115,7 +130,6 @@ class ExpenseData {
         try {
             const resp = await this.adapter.updateExpenses(params)
             // reload values
-            console.log(resp)
             this.insertUpdatedExpenses(resp)
             // reset edit button
         } catch(err) {

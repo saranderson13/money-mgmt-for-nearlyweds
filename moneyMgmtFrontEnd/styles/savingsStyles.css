@@ -1,55 +1,37 @@
-/* WEDDING SPECIFIC STYLING */
+/* SAVINGS SPECIFIC STYLING */
 
-#weddingDate {
-    font-size: 30px;
-    font-family: 'Abel';
+.savingsRight, .savingsLeft {
+    width: 49.5%;
 }
 
-#weddingCountdown {
-    font-size: 20px;
-    font-family: 'Abel';
-}
-
-#expenseTableContainer {
-    box-sizing: border-box;
-    width: 40%;
+#savingsSummaryTable, #editValuesTable, #addSavingsTable, #encumbranceTable {
+    width: 100%;
     padding: 10px 15px 20px;
-    margin-bottom: 100px;
-    float: left;
     background-color: #ffffff;
-    border: 1px solid #c5a45c;
+    margin-bottom: 10px;
 }
 
-.weddingRight {
-    width: 59%;
+.fullRowEntry {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0px 30px;
 }
 
-table#expenseTable {
+input#savingsEntry {
+    font-family: 'Nanum Gothic Coding';
     width: 100%;
 }
 
-table#savingsTable {
-    width: 100%;
-    vertical-align: top;
-    background-color: #ffffff;
-    border-spacing: 0px;
-}
-
-table#weddingSummaryTable {
-    width: 100%;
-    background-color: #ffffff;
-}
-
-#expenseTable tr, #weddingSummaryTable tr, #savingsTable tr {
-    border-bottom: 1px solid #e2ca96;
-    height: 35px;
-}
-
-th.weddingPageTable {
+th.savingsPageTableHeader {
     text-align: center;
     font-family: 'Abel';
     font-size: 18px;
     border-bottom: 2px solid #e2ca96;
+}
+
+tr {
+    border-bottom: 1px solid #e2ca96;
+    height: 35px;
 }
 
 td.tableText {
@@ -57,7 +39,15 @@ td.tableText {
     font-size: 16px;
     padding: 0px 20px;
     background-color: #f7f3ee;
-    width: 55%;
+    /* width: 50%; */
+}
+
+.leftTable td.tableText {
+    width: 50%;
+}
+
+.rightTable td.tableText {
+    width: 60%;
 }
 
 td.tableNum {
@@ -69,19 +59,20 @@ td.tableNum {
     min-width: 100px;
 }
 
-#weddingSummaryTable td.tableNum {
+#savingsSummaryTable td.tableNum, #editValuesTable td.tableNum {
     text-align: left;
     padding-left: 30px;
 }
 
-td.recommendation, td.tableButton {
+td.tableButton {
     text-align: center;
     padding: 10px 0px;
 }
 
-button.editExpense, input.editExpense {
+button.addLine, button.editLines, input.editExpense {
     box-sizing: border-box;
     display: block;
+    width: 120px;
     align-items: center;
     -webkit-appearance: none;
     -webkit-border-vertical-spacing: 0px;
@@ -101,3 +92,4 @@ button.editExpense, input.editExpense {
 button.editExpense:hover {
     box-shadow: 1px 1px 1px #ffffff;
 }
+

@@ -29,9 +29,6 @@ class WeddingAdapter {
         })
         const json = await this.baseAdapter.checkStatus(resp)
         return await json
-        // const await this.baseAdapter.checkStatus(resp);
     }
-
-    // async getBudget
     
 }

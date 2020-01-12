@@ -169,7 +169,7 @@ class WeddingPage extends PageManager {
 
 
             <!-- Begin Savings/Summary Column -->
-            <div id="rightTablesContainer">
+            <div id="rightTablesContainer" class="weddingRight">
                 
                 <!-- Begin Savings Table -->
                 <div class="rightTable"><table id="savingsTable">
@@ -199,7 +199,7 @@ class WeddingPage extends PageManager {
 
 
                 <!-- Begin Summary Table -->
-                <div class="rightTable"><table id="summaryTable">
+                <div class="rightTable"><table id="weddingSummaryTable">
                     <th class="weddingPageTable" colspan="2">Summary</th>
                     <tr>
                         <td class="tableText">Total Projected Expenses</td>

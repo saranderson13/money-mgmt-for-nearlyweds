@@ -11,7 +11,118 @@ class SavingsPage extends PageManager {
 
     get staticHTML() {
         return (`
-            <h1>Savings Page</h1>
+            <div id="summaryContainer">
+                <!-- Begin Top Section - savings plan info -->
+                <div id="savingsInfoContainer">
+                    <div id="planName">
+                        Savings Plan for Sarah
+                    </div>
+                </div>
+            </div>
+            <!-- End Top Section -->
+
+
+
+
+
+
+            <!-- Begin Bottom Section - numbers tables -->
+            <div id="tablesContainer">
+
+                <!-- Begin Left Column -->
+                <div id="leftTablesContainer" class="savingsLeft">
+                    <!-- Begin Add to Savings Table -->
+                    <div class="leftTable">
+                        <form id="editValues">
+                            <table id="addSavingsTable">
+                                <th class="savingsPageTableHeader">Add to Savings</th>
+                                <tr>
+                                    <td class="fullRowEntry"><input type="text" id="savingsEntry" placeholder="Enter only numbers, no '$' or commas."></input></td>
+                                </tr>
+                                <td class="tableButton"><button type="submit" class="addLine">Add</button></td>
+                            </table>
+                        </form>
+                    </div> 
+                    <!-- End Add to Savings Table -->
+
+                    <!-- Begin Encumbrance Table -->
+                    <div class="leftTable">
+                        <form id ="encumbranceForm">
+                            <table id="encumbranceTable">
+                                <th class="savingsPageTableHeader" colspan="2">Monthly Encumbrances</th>
+                                <tr>
+                                    <td class="tableText">Example Line</td>
+                                    <td class="tableNum" data-expense-category="lineName">
+                                        $1,000
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="tableButton"><button class="addLine">Add Line</button></td>
+                                    <td class="tableButton"><button class="editLines">Edit Lines</button></td>
+                                </tr>
+                            </table>
+                        </form>
+                    </div>
+                    <!-- End Encumbrance Table -->
+                </div>
+                <!-- End Left Column -->
+
+
+
+
+                <!-- Begin Savings/Summary Column -->
+                <div id="rightTablesContainer" class="savingsRight">
+                    
+                    <!-- Begin Edit Values Table -->
+                    <div class="rightTable">
+                        <form id="savingsSummary">
+                            <table id="savingsSummaryTable">
+                                <th class="savingsPageTableHeader" colspan="2">Savings Summary</th>
+                                <tr>
+                                    <td class="tableText">Income per Month</td>
+                                    <td class="tableNum" data-editable="true">$1,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableText">Expenses Per Month</td>
+                                    <td class="tableNum" data-editable="false">$1,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableText">Current Savings</td>
+                                    <td class="tableNum" data-editable="false">$1,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableText">Total Savings Goal</td>
+                                    <td class="tableNum" data-editable="false">$1,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableText">Remaining Savings Needed</td>
+                                    <td class="tableNum" data-editable="false">$1,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableText">Recommended Monthly Savings Goal</td>
+                                    <td class="tableNum" data-editable="false">$1,000</td>
+                                </tr>   
+                                <tr>
+                                    <td class="tableText">Monthly Savings Goal</td>
+                                    <td class="tableNum" data-editable="true">$1,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableText">Projected Future Savings on Plan</td>
+                                    <td class="tableNum"  data-editable="false">$1,000</td>
+                                </tr>
+                                <tr>
+                                    <td class="tableText">Bottom Line</td>
+                                    <td class="tableNum" data-editable="false">$1,000</td>
+                                </tr>
+                                <td class="tableButton"colspan="2"><button class="addLine">Edit Values</button></td>
+                            </table>
+                        </form>
+                    </div> 
+                    <!-- End Savings Table -->
+                </div>
+                <!-- End Savings/Summary Column -->
+            </div>
+            <!-- End Bottom Section -->
         `)
     }
 }
