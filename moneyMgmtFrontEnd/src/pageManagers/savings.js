@@ -2,11 +2,38 @@ class SavingsPage extends PageManager {
 
     constructor(container, adapter) {
         super(container)
+        this.container.parent = this
         this.adapter = new SavingsAdapter(adapter);
+        this.encumbrances = new EncumbranceData(this.adapter)
     }
 
     initBindingsAndEventListeners() {
-        return null
+        this.encumbrances.setAddSavingsButtonListener();
+        this.encumbrances.setAddEncumbranceLineButtonListener();
+        this.encumbrances.setEditEncumbrancesButtonListener();
+        this.encumbrances.setEditValuesButtonListener();
+
+        // Listeners for dynamic buttons.
+        this.container.addEventListener('click',function(e, ){
+            e.preventDefault()
+            if(e.target && e.target.id === "encumbrancesSubmit") {
+                this.parent.encumbrances.handleEncumbranceEditSubmit(e)
+            } else if(e.target && e.target.id === "editSummarySubmit") {
+                this.parent.encumbrances.handleValueEditSubmit(e)
+            }
+         });
+    }
+
+    async fetchAndRenderPageResources() {
+        try {
+            // fetch data
+            const savingsPlan = await this.adapter.getAsset("savings")
+            const encumbrances = await this.adapter.getAsset("encumbrances")
+            // call insert functions
+
+        } catch {
+            this.handleAuthorizationError(err)
+        }
     }
 
     get staticHTML() {

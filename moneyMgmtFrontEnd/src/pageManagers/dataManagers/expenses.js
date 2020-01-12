@@ -37,6 +37,7 @@ class ExpenseData {
         this.setEditButtonListener()
     }
 
+    // SHARED WITH ENCUMBRANCE DATA - COULD SET UP INHERITANCE?
     formatCostForDisplay(num) {
         // Takes a number (ex: 1000) and returns a string (=> "$1,000")
         const numArray = num.toString().split("").reverse()
@@ -49,6 +50,7 @@ class ExpenseData {
         return numArray.reverse().join("")
     }
 
+    // SHARED WITH ENCUMBRANCE DATA - COULD SET UP INHERITANCE?
     formatCostForCalculation(string) {
         // Takes a string (ex: "$1,000") and returns a number (=> 1000)
         return parseInt(string.replace(/[^0-9]/g, ""), 10)

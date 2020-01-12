@@ -2,27 +2,12 @@ class EncumbrancesController < ApplicationController
 
     before_action :authenticate_user!
 
-
-    def index
-        # u = User.find(1)
-        # enc = u.encumbrances
-        enc = current_user.encumbrances
-        render json: enc.to_json
-    end
-
-
-    def show
-        enc = Encumbrance.find(params[:id])
-        authorize_user_resource(enc)
-        render json: enc.to_json
-    end
-
-
     def create
         enc = current_user.encumbrances.build(savings_plan: current_user.savings_plan)
         enc.update(enc_params)
         enc.save
-        render json: enc.to_json
+        encs = current_user.encumbrances
+        render json: encs.to_json()
     end
 
 
@@ -30,7 +15,8 @@ class EncumbrancesController < ApplicationController
         enc = Encumbrance.find(params[:id])
         authorize_user_resource(enc)
         enc.update(enc_params)
-        render json: enc.to_json
+        encs = current_user.encumbrances
+        render json: encs.to_json()
     end
 
 
@@ -38,7 +24,7 @@ class EncumbrancesController < ApplicationController
         enc = Encumbrance.find(params[:id])
         authorize_user_resource(enc)
         enc.destroy
-        render json: enc.to_json
+        render json: enc.to_json()
     end
 
 
@@ -46,7 +32,7 @@ class EncumbrancesController < ApplicationController
     private
 
     def enc_params
-        params.require(:encumbrance).permit(:savings_plan, :name, :amount, :frequency,)
+        params.require(:encumbrance).permit(:savings_plan, :id, :encumbrance_name, :amount)
     end
 
 end

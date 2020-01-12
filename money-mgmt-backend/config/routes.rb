@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
 
   get '/wedding', to: 'weddings#index'
+  get '/savings', to: 'savings_plans#index'
   get '/user', to: 'users#index'
   resources :expenses, only: [:index, :update]
-  resources :encumbrances, except: [:new, :edit]
+  resources :encumbrances, only: [:create, :update, :destroy]
 
 
   # devise_for :users

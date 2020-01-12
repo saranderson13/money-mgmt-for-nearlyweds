@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_07_234741) do
+ActiveRecord::Schema.define(version: 2020_01_12_213404) do
 
   create_table "color_palettes", force: :cascade do |t|
     t.integer "wedding_id"
@@ -28,9 +28,8 @@ ActiveRecord::Schema.define(version: 2020_01_07_234741) do
 
   create_table "encumbrances", force: :cascade do |t|
     t.integer "savings_plan_id"
-    t.string "name"
+    t.string "encumbrance_name"
     t.integer "amount"
-    t.string "frequency"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["savings_plan_id"], name: "index_encumbrances_on_savings_plan_id"
@@ -67,11 +66,8 @@ ActiveRecord::Schema.define(version: 2020_01_07_234741) do
 
   create_table "savings_plans", force: :cascade do |t|
     t.integer "user_id"
-    t.string "pay_period_type"
-    t.integer "income_per_pp"
-    t.integer "recommended"
-    t.integer "custom_amount"
-    t.integer "projected"
+    t.integer "income_per_month"
+    t.integer "monthly_savings_goal", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_savings_plans_on_user_id"

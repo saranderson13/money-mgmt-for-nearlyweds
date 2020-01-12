@@ -9,9 +9,10 @@ class WeddingPage extends PageManager {
 
     initBindingsAndEventListeners() {
         this.expenses.setEditButtonListener();
-        this.container.addEventListener('click',function(e, ){
+        this.container.addEventListener('click',function(e){
             e.preventDefault()
             if(e.target && e.target.id === 'expenseSubmit'){
+                console.log(this.parent.expenses)
                 this.parent.expenses.handleExpenseEditSubmit(e)
              }
          });
@@ -63,10 +64,6 @@ class WeddingPage extends PageManager {
         const countdownDays = Math.floor((date - now) / (1000 * 60 * 60 * 24))
         const countdownString = `${countdownDays} days until the big day!`
         countdownContainer.innerHTML = countdownString
-    }
-
-    get getExpenses() {
-        return this.expenses
     }
 
     get staticHTML() {
@@ -220,11 +217,6 @@ class WeddingPage extends PageManager {
                     <tr>
                         <td class="tableText">Bottom Line</td>
                         <td class="tableNum" data-summary-category="bottomLine"></td>
-                    </tr>
-                    <tr>
-                        <td class="tableText recommendation" colspan="2">
-                            You will need to increase the amount you save per paycheck to reach your goal.
-                        </td>
                     </tr>
                 </table></div>
                 <!-- End Summary Table -->

@@ -79,8 +79,6 @@ button.addLine, button.editLines, input.editExpense {
     -webkit-border-horizontal-spacing: 0px;
     border: none;
     border-image-width: 0px;
-    display: inline;
-    /* vertical-align: middle; */
     font-size: 15px; line-height: 15px;
     font-family: 'Abel'; text-transform: uppercase;
     background-color: #f7f3ee;
