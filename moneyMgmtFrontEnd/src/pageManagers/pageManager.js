@@ -21,8 +21,6 @@ class PageManager {
         this.redirect('welcome')
     }
 
-
-    // !!!!!SHARED WITH EXPENSE DATA - COULD INHERIT?
     formatCostForDisplay(num) {
         // Takes a number (ex: 1000) and returns a string (=> "$1,000")
         const numArray = num.toString().split("").reverse()
@@ -35,8 +33,7 @@ class PageManager {
         return numArray.reverse().join("")
     }
 
-    // !!!!!SHARED WITH ENCUMBRANCE DATA - COULD SET UP INHERITANCE?
-    formatCostForCalculation(num) {
+    formatCostForCalculation(string) {
         // Takes a string (ex: "$1,000") and returns a number (=> 1000)
         return parseInt(string.replace(/[^0-9]/g, ""), 10)
     }

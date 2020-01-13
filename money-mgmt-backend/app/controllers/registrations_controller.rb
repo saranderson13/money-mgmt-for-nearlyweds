@@ -19,7 +19,7 @@ class RegistrationsController < Devise::RegistrationsController
                         end
                     end
                     if user.valid?
-                        user.wedding.create_budget
+                        user.wedding.create_expenses
                         user.wedding.create_color_palette
                     end
                     user.save

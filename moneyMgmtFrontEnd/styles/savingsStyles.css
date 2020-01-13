@@ -64,12 +64,12 @@ td.tableNum {
     padding-left: 30px;
 }
 
-td.tableButton {
+/* td.tableButton {
     text-align: center;
     padding: 10px 0px;
-}
+} */
 
-button.addLine, button.editLines, input.editExpense {
+button.addLine, button.editLines, button.editValues, button.addSavingsButton, input.editSavings {
     box-sizing: border-box;
     display: block;
     width: 120px;
@@ -87,7 +87,11 @@ button.addLine, button.editLines, input.editExpense {
     transition: all 0.15s linear;
 }
 
-button.editExpense:hover {
+button.addLine:hover, button.editLines:hover, button.editValues:hover, button.addSavingsButton:hover, input.editSavings:hover {
     box-shadow: 1px 1px 1px #ffffff;
 }
 
+#instructionRow {
+    text-align: center;
+    font-family: 'Abel';
+}

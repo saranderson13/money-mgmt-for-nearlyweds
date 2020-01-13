@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   get '/wedding', to: 'weddings#index'
   get '/savings', to: 'savings_plans#index'
+  patch '/savings', to: 'savings_plans#update'
   get '/user', to: 'users#index'
   resources :expenses, only: [:index, :update]
   resources :encumbrances, only: [:create, :update, :destroy]

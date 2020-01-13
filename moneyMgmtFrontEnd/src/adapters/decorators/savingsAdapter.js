@@ -22,15 +22,14 @@ class SavingsAdapter {
     }
 
 
-    // SAVE FOR LATER
-    // async updateSavings(params) {
-    //     const resp = await fetch(`${this.baseURL}/expenses/${params.expenses.id}`, {
-    //         method: 'PATCH',
-    //         headers: this.headers,
-    //         body: JSON.stringify(params)
-    //     })
-    //     const json = await this.baseAdapter.checkStatus(resp)
-    //     return await json
-    // }
+    async updateSavings(params) {
+        const resp = await fetch(`${this.baseURL}/savings`, {
+            method: 'PATCH',
+            headers: this.headers,
+            body: JSON.stringify(params)
+        })
+        const json = await this.baseAdapter.checkStatus(resp)
+        return await json
+    }
 
 }

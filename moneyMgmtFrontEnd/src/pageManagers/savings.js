@@ -8,19 +8,19 @@ class SavingsPage extends PageManager {
     }
 
     initBindingsAndEventListeners() {
-        this.encumbrances.setAddSavingsButtonListener();
-        this.encumbrances.setAddEncumbranceLineButtonListener();
-        this.encumbrances.setEditEncumbrancesButtonListener();
-        this.encumbrances.setEditValuesButtonListener();
+        // this.encumbrances.setAddEncumbranceLineButtonListener();
+        // this.encumbrances.setEditEncumbrancesButtonListener();
+        this.setAddSavingsButtonListener();
+        this.setEditValuesButtonListener();
 
         // Listeners for dynamic buttons.
         const savingsPage = this.parent.router.routes.savings
-        this.container.addEventListener('click',function(e, ){
+        this.container.addEventListener('click',function(e){
             e.preventDefault()
             if(e.target && e.target.id === "encumbrancesSubmit") {
                 savingsPage.encumbrances.handleEncumbranceEditSubmit(e)
             } else if(e.target && e.target.id === "editSummarySubmit") {
-                savingsPage.encumbrances.handleValueEditSubmit(e)
+                savingsPage.handleValueEditSubmit(e)
             }
          });
     }
@@ -30,13 +30,21 @@ class SavingsPage extends PageManager {
             // fetch data
             const savingsPlan = await this.adapter.getAsset("savings")
             const wedding = await this.adapter.getAsset("wedding")
-
             // call insert functions
-            // this.encumbrances.insertEncumbrances();
+            this.encumbrances.insertEncumbrances(savingsPlan.encumbrances);
+            this.insertSavingsIdToForms(savingsPlan)
             this.insertSavingsSummary(savingsPlan, wedding.date);
         } catch {
             this.handleAuthorizationError(err)
         }
+    }
+
+    insertSavingsIdToForms(savings) {
+        const addForm = document.querySelector('form#addSavingsForm')
+        addForm.dataset.savingsId = savings.id
+
+        const summaryForm = document.querySelector('form#savingsSummary')
+        summaryForm.dataset.savingsId = savings.id
     }
 
     insertSavingsSummary(plan, weddingDate) {
@@ -53,7 +61,10 @@ class SavingsPage extends PageManager {
     }
 
     summaryCalculations(plan, weddingDate) {
-        const encTotal = plan.encumbrances.map(e => e.amount).reduce((a,c) => a + c)
+        let encTotal = 0
+        if( plan.encumbrances.length > 0 ){
+            encTotal = plan.encumbrances.map(e => e.amount).reduce((a,c) => a + c)
+        }
         const remainingIncome = plan.income_per_month - encTotal
         const recommendedGoal = remainingIncome / 2
         const projectedOnPlan = plan.monthly_savings_goal * this.remainingMonths(weddingDate)
@@ -72,25 +83,96 @@ class SavingsPage extends PageManager {
         }
     }
 
-    // // !!!!!SHARED WITH EXPENSE DATA - COULD INHERIT?
-    // formatCostForDisplay(num) {
-    //     // Takes a number (ex: 1000) and returns a string (=> "$1,000")
-    //     const numArray = num.toString().split("").reverse()
-    //     const commaCount = Math.floor(numArray.length / 3)
-    //     for (let i = commaCount; i > 0; i--) {
-    //         let placement = i * 3
-    //         numArray.splice(placement, 0, ',')
-    //     }
-    //     if (numArray[numArray.length - 1] === ",") { numArray.pop() }
-    //     return numArray.reverse().join("")
-    // }
+    setAddSavingsButtonListener() {
+        const addSubmit = document.querySelector('button#savingsSubmit')
+        addSubmit.addEventListener("click", e => this.handleAddSavings(e))
+    }
 
-    // // !!!!!SHARED WITH ENCUMBRANCE DATA - COULD SET UP INHERITANCE?
-    // formatCostForCalculation(num) {
-    //     // Takes a string (ex: "$1,000") and returns a number (=> 1000)
-    //     return parseInt(string.replace(/[^0-9]/g, ""), 10)
-    // }
+    async handleAddSavings(event) {
+        event.preventDefault();
+        // grab form
+        // grab amount from form
+        // maybe set savings id?
+        const amount = document.querySelector('input#savingsEntry').value
+        const id = document.querySelector('form#addSavingsForm').dataset.savingsId
+        // put amount into params
+        const params = {
+            savings: {
+                id, amount
+            }
+        }
+        // attempt patch
+        try {
+            const resp = await this.adapter.updateSavings(params)
+            const wedding = await this.adapter.getAsset("wedding")
+            this.insertSavingsSummary(resp, wedding.date)
+            document.querySelector('input#savingsEntry').value = ""
+            this.handleAlert("Savings successfully added.", 'success')
+        } catch(err) {
+            console.log(err)
+        }
+    }
 
+    setEditValuesButtonListener() {
+        const editButton = document.querySelector('.tableButton .editValues');
+        const buttonRow = editButton.parentNode
+        const allFields = document.querySelectorAll('[data-editable="true"]');
+
+        console.log(editButton)
+        editButton.addEventListener("click", e => {
+            e.preventDefault();
+            
+            for(let ea of Array.from(allFields)) {
+                let currentValue = this.formatCostForCalculation(ea.innerText)
+                let inputId = ea.dataset.summaryCategory
+                ea.innerHTML = `<input type="text" id=${inputId} name=${inputId} value="${currentValue}"></input>`
+            }
+
+            buttonRow.removeChild(editButton)
+
+            const submitButton = document.createElement('input')
+            submitButton.type = "submit"
+            submitButton.id = "editSummarySubmit"
+            submitButton.className = "editSavings"
+            submitButton.innerText = "Submit"
+            buttonRow.appendChild(submitButton)
+        })
+    }
+
+    async handleValueEditSubmit(event) {
+        event.preventDefault();
+
+        const summaryForm = document.getElementById('savingsSummary')
+
+        const [income, monthly_savings_goal] = Array.from(summaryForm.querySelectorAll('input[type="text"]')).map(i => i.value)
+        const id = summaryForm.dataset.savingsId
+        const params = {
+            savings: {
+                id, income, monthly_savings_goal
+            }
+        }
+
+        try {
+            const resp = await this.adapter.updateSavings(params)
+            const wedding = await this.adapter.getAsset("wedding")
+            console.log(resp)
+            this.insertSavingsSummary(resp, wedding.date)
+
+            // Remove Submit
+            const submitButton = document.getElementById('editSummarySubmit')
+            const buttonRow = submitButton.parentNode
+            buttonRow.removeChild(submitButton)
+
+            // Add Edit Button
+            const editButton = document.createElement('button')
+            editButton.className = "editValues"
+            editButton.innerText = "Edit Values"
+            buttonRow.appendChild(editButton)
+            this.setEditValuesButtonListener()
+        } catch {
+            console.log(err)
+        }
+    }
 
 
     get staticHTML() {
@@ -121,12 +203,7 @@ class SavingsPage extends PageManager {
                         <form id ="encumbranceForm">
                             <table id="encumbranceTable">
                                 <th class="savingsPageTableHeader" colspan="2">Monthly Encumbrances</th>
-                                <tr>
-                                    <td class="tableText">Example Line</td>
-                                    <td class="tableNum" data-expense-category="lineName">
-                                        $1,000
-                                    </td>
-                                </tr>
+                                <!-- ROWS WILL GO HERE -->
                                 <tr>
                                     <td class="tableButton"><button class="addLine">Add Line</button></td>
                                     <td class="tableButton"><button class="editLines">Edit Lines</button></td>
@@ -145,14 +222,16 @@ class SavingsPage extends PageManager {
                 <div id="rightTablesContainer" class="savingsRight">
 
                     <!-- Begin Add to Savings Table -->
-                        <div class="leftTable">
-                            <form id="editValues">
+                        <div class="rightTable">
+                            <form id="addSavingsForm">
                                 <table id="addSavingsTable">
                                     <th class="savingsPageTableHeader">Add to Savings</th>
                                     <tr>
-                                        <td class="fullRowEntry"><input type="text" id="savingsEntry" placeholder="Enter only numbers, no '$' or commas."></input></td>
+                                        <td class="fullRowEntry"><input type="text" id="savingsEntry" data-form="addSavings" placeholder="Enter only numbers, no '$' or commas."></input></td>
                                     </tr>
-                                    <td class="tableButton"><button type="submit" class="addLine">Add</button></td>
+                                    <tr>
+                                        <td class="tableButton"><button type="submit" id="savingsSubmit" class="addSavingsButton">Add</button></td>
+                                    </tr>
                                 </table>
                             </form>
                         </div>  
@@ -166,33 +245,33 @@ class SavingsPage extends PageManager {
                                 <th class="savingsPageTableHeader" colspan="2">Savings Summary</th>
                                 <tr>
                                     <td class="tableText">Income per Month</td>
-                                    <td class="tableNum" data-editable="true" data-summary-category="income">$1,000</td>
+                                    <td class="tableNum" data-editable="true" data-summary-category="income"></td>
                                 </tr>
                                 <tr>
                                     <td class="tableText">Encumbrances Per Month</td>
-                                    <td class="tableNum" data-editable="false" data-summary-category="encTotal">$1,000</td>
+                                    <td class="tableNum" data-editable="false" data-summary-category="encTotal"></td>
                                 </tr>
                                 <tr>
                                     <td class="tableText">Total Remaining After Encumbrances</td>
-                                    <td class="tableNum" data-editable="false" data-summary-category="remainingIncome">$1,000</td>
+                                    <td class="tableNum" data-editable="false" data-summary-category="remainingIncome"></td>
                                 </tr>
                                 <tr>
                                     <td class="tableText">Current Personal Savings</td>
-                                    <td class="tableNum" data-editable="false" data-summary-category="currentSavings">$1,000</td>
+                                    <td class="tableNum" data-editable="false" data-summary-category="currentSavings"></td>
                                 </tr>
                                 <tr>
                                     <td class="tableText">Recommended Monthly Savings Goal</td>
-                                    <td class="tableNum" data-editable="false" data-summary-category="recommendedGoal">$1,000</td>
+                                    <td class="tableNum" data-editable="false" data-summary-category="recommendedGoal"></td>
                                 </tr>   
                                 <tr>
                                     <td class="tableText">Monthly Savings Goal</td>
-                                    <td class="tableNum" data-editable="true" data-summary-category="declaredGoal">$1,000</td>
+                                    <td class="tableNum" data-editable="true" data-summary-category="declaredGoal"></td>
                                 </tr>
                                 <tr>
                                     <td class="tableText">Projected Future Savings on Plan</td>
-                                    <td class="tableNum" data-editable="false" data-summary-category="projectedOnPlan">$1,000</td>
+                                    <td class="tableNum" data-editable="false" data-summary-category="projectedOnPlan"></td>
                                 </tr>
-                                <td class="tableButton"colspan="2"><button class="addLine">Edit Values</button></td>
+                                <td class="tableButton"colspan="2"><button class="editValues">Edit Values</button></td>
                             </table>
                         </form>
                     </div> 

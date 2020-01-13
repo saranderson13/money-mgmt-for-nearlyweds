@@ -98,6 +98,6 @@ button.editExpense, input.editExpense {
     transition: all 0.15s linear;
 }
 
-button.editExpense:hover {
+button.editExpense:hover, input.editExpense:hover {
     box-shadow: 1px 1px 1px #ffffff;
 }
