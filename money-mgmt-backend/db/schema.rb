@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_12_213404) do
+ActiveRecord::Schema.define(version: 2020_01_13_001713) do
 
   create_table "color_palettes", force: :cascade do |t|
     t.integer "wedding_id"
@@ -70,6 +70,7 @@ ActiveRecord::Schema.define(version: 2020_01_12_213404) do
     t.integer "monthly_savings_goal", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "current_savings", default: 0
     t.index ["user_id"], name: "index_savings_plans_on_user_id"
   end
 

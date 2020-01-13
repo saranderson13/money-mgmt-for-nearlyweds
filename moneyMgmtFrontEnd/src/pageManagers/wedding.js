@@ -1,19 +1,19 @@
 class WeddingPage extends PageManager {
 
-    constructor(container, adapter) {
+    constructor(container, adapter, parent) {
         super(container)
-        this.container.parent = this
         this.adapter = new WeddingAdapter(adapter);
-        this.expenses = new ExpenseData(this.adapter)
+        this.expenses = new ExpenseData(this.adapter);
+        this.parent = parent
     }
 
     initBindingsAndEventListeners() {
+        const weddingPage = this.parent.router.routes.wedding
         this.expenses.setEditButtonListener();
         this.container.addEventListener('click',function(e){
             e.preventDefault()
             if(e.target && e.target.id === 'expenseSubmit'){
-                console.log(this.parent.expenses)
-                this.parent.expenses.handleExpenseEditSubmit(e)
+                weddingPage.expenses.handleExpenseEditSubmit(e)
              }
          });
     }

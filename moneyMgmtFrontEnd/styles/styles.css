@@ -5,6 +5,10 @@ body {
     height: 100%
 }
 
+#app-container {
+    height: 100%;
+}
+
 #summaryContainer {
     width: 90%;
     margin: 50px auto 10px;

@@ -64,6 +64,7 @@ class Router {
         // in the navbar pageManager, when a new click is handled, (in #handlClick)
         // the page is only redirected if navbar.currentPage does not equal the target.
         this.navbar.currentPage = () => {
+            // console.log(this.currentPage)
             return this.currentPage
         }
     }

@@ -11,8 +11,8 @@ class App {
             'login': new LoginPage(this.pageContainer, this.adapter),
             'signup': new SignupPage(this.pageContainer, this.adapter),
             'settings': new SettingsPage(this.pageContainer, this.adapter),
-            'wedding': new WeddingPage(this.pageContainer, this.adapter),
-            'savings': new SavingsPage(this.pageContainer, this.adapter)
+            'wedding': new WeddingPage(this.pageContainer, this.adapter, this),
+            'savings': new SavingsPage(this.pageContainer, this.adapter, this)
         })
 
         this.router.assignNavbar(new Navbar(this.navbarContainer, this.adapter))
@@ -36,5 +36,6 @@ class App {
     // managed by the App object as opposed to the Router.
     pageManagerRedirect(page) {
         this.router.render(page)
+        // console.log(page)
     }
 }
