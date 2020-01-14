@@ -16,6 +16,8 @@ class EncumbranceData extends DataManager {
             for (let enc of encumbrances) {
                 let numRows = document.getElementById('encumbranceTable').rows.length
                 let row = eTableBody.insertRow(numRows - 1)
+                row.className = "eLine"
+                row.dataset.eId = `${enc.id}`
 
                 let nameCell = row.insertCell(0)
                 nameCell.className = "tableText"
@@ -59,7 +61,7 @@ class EncumbranceData extends DataManager {
     setAddEncumbranceLineButtonListener() {
         const addButton = document.querySelector('.tableButton .addLine')
         addButton.addEventListener("click", e => {
-            e.preventDefault
+            e.preventDefault()
             const eTableBody = document.querySelector('#encumbranceTable tbody')
             const numRows = document.getElementById('encumbranceTable').rows.length
             let row = eTableBody.insertRow(numRows - 1)
@@ -83,9 +85,6 @@ class EncumbranceData extends DataManager {
             saveLine.id = "saveLine"
             saveLine.innerText = "Save Line"
             buttonCell.appendChild(saveLine)
-
-
-
         })
     }
 
@@ -107,24 +106,68 @@ class EncumbranceData extends DataManager {
             this.clearEncumbrances()
             this.insertEncumbrances(resp, savings_plan_id)
             this.resetEncumbranceButtons()
+
+            // Update summary table
+            const savingsPlan = await this.adapter.getAsset("savings")
+            const wedding = await this.adapter.getAsset("wedding")
+            this.parent.insertSavingsSummary(savingsPlan, wedding.date)
+
         } catch(err) {
             console.log(err)
         }
     }
 
-    setSaveEncumbranceLineButtonListener() {
-
-    }
-
     setEditEncumbrancesButtonListener() {
+        const editButton = document.querySelector('.tableButton .editLines')
+        editButton.addEventListener("click", e => {
+            e.preventDefault()
+            
+            // get all encRows
+            const eRows = document.querySelectorAll('#encumbranceTable tr.eLine')
+            eRows.forEach( row => {
+                // Get existing cells
+                let nameCell = row.querySelector('.tableText')
+                let numCell = row.querySelector('.tableNum')
 
+                // Create delete cell & checkbox
+                let deleteBox = row.insertCell(0)
+                let eId = deleteBox.parentNode.dataset.eId
+                deleteBox.className = "encDeleteCheckbox";
+                let checkbox = document.createElement('input')
+                checkbox.type = "checkbox"
+                checkbox.dataset.eId = eId
+                checkbox.name = nameCell.innerText.split(" ").join("-")
+                deleteBox.appendChild(checkbox)
+
+                // Replace nameCell & numCell with inputs
+                nameCell.innerHTML = `<input type="text" name="editEncName" value="${nameCell.innerText}" required></input>`
+                numCell.innerHTML = `<input type="text" name="editEncAmount" value="${numCell.innerText}" required></input>`
+            })
+
+            // Adjust table header to fit third column
+            const tableHeader = document.querySelector('#encumbranceTable .savingsPageTableHeader')
+            tableHeader.colSpan = "3"
+
+            // Remove add line button
+            const buttonCell = e.target.parentNode
+            const otherCell = buttonCell.previousElementSibling
+            buttonCell.removeChild(editButton);
+            otherCell.removeChild(otherCell.firstChild)
+            otherCell.colSpan = "2"
+            otherCell.className = "noteCell"
+            otherCell.innerText = "**Checked lines will be deleted**"
+
+            // Add submit button
+            const saveEdits = document.createElement('button')
+            saveEdits.id = "saveEdits"
+            saveEdits.innerText = "Save Edits"
+            buttonCell.appendChild(saveEdits)
+        })
     }
-
-
 
     async handleEncumbranceEditSubmit(event) {
         event.preventDefault();
-
+        console.log("attempting to submit changes")
     }
 
 

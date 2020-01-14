@@ -73,7 +73,7 @@ input#newEncName, input#newEncAmount {
     width: 100%;
 }
 
-button#saveLine, button.addLine, button.editLines, button.editValues, button.addSavingsButton, input.editSavings {
+button#saveEdits, button#saveLine, button.addLine, button.editLines, button.editValues, button.addSavingsButton, input.editSavings {
     box-sizing: border-box;
     margin: 0px auto;
     display: block;
@@ -92,11 +92,21 @@ button#saveLine, button.addLine, button.editLines, button.editValues, button.add
     transition: all 0.15s linear;
 }
 
-button#saveLine:hover, button.addLine:hover, button.editLines:hover, button.editValues:hover, button.addSavingsButton:hover, input.editSavings:hover {
+button#saveEdits:hover, button#saveLine:hover, button.addLine:hover, button.editLines:hover, button.editValues:hover, button.addSavingsButton:hover, input.editSavings:hover {
     box-shadow: 1px 1px 1px #ffffff;
 }
 
 #instructionRow {
     text-align: center;
     font-family: 'Abel';
+}
+
+.encDeleteCheckbox {
+    width: 26px;
+}
+
+.noteCell {
+    text-align: center;
+    font-family: 'Abel';
+    font-size: 14px;
 }

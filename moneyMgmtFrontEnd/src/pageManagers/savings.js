@@ -4,25 +4,28 @@ class SavingsPage extends PageManager {
         super(container)
         this.adapter = new SavingsAdapter(adapter);
         this.encumbrances = new EncumbranceData(this.adapter)
+        this.encumbrances.parent = this
         this.parent = parent
     }
 
     initBindingsAndEventListeners() {
         this.encumbrances.setAddEncumbranceLineButtonListener();
-        // this.encumbrances.setEditEncumbrancesButtonListener();
+        this.encumbrances.setEditEncumbrancesButtonListener();
         this.setAddSavingsButtonListener();
         this.setEditValuesButtonListener();
 
         // Listeners for dynamic buttons.
         const savingsPage = this.parent.router.routes.savings
         this.container.addEventListener('click',function(e){
-            e.preventDefault()
-            if(e.target && e.target.id === "encumbrancesSubmit") {
-                savingsPage.encumbrances.handleEncumbranceEditSubmit(e)
-            } else if(e.target && e.target.id === "editSummarySubmit") {
-                savingsPage.handleValueEditSubmit(e)
-            } else if(e.target && e.target.id === "saveLine") {
-                savingsPage.encumbrances.handleAddLineSubmit(e)
+            if (e.target.type !== "checkbox") {
+                e.preventDefault()
+                if(e.target && e.target.id === "saveEdits") {
+                    savingsPage.encumbrances.handleEncumbranceEditSubmit(e)
+                } else if(e.target && e.target.id === "editSummarySubmit") {
+                    savingsPage.handleValueEditSubmit(e)
+                } else if(e.target && e.target.id === "saveLine") {
+                    savingsPage.encumbrances.handleAddLineSubmit(e)
+                }
             }
          });
     }

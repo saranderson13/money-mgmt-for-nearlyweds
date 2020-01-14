@@ -11,10 +11,12 @@ class WeddingPage extends PageManager {
         const weddingPage = this.parent.router.routes.wedding
         this.expenses.setEditButtonListener();
         this.container.addEventListener('click',function(e){
-            e.preventDefault()
-            if(e.target && e.target.id === 'expenseSubmit'){
-                weddingPage.expenses.handleExpenseEditSubmit(e)
-             }
+            if (e.target.type !== "checkbox") {
+                e.preventDefault()
+                if(e.target && e.target.id === 'expenseSubmit'){
+                    weddingPage.expenses.handleExpenseEditSubmit(e)
+                }
+            }
          });
     }
 
