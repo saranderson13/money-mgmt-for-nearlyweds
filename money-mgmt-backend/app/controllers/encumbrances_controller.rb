@@ -3,8 +3,11 @@ class EncumbrancesController < ApplicationController
     before_action :authenticate_user!
 
     def create
-        enc = current_user.encumbrances.build(savings_plan: current_user.savings_plan)
-        enc.update(enc_params)
+        sPlan = SavingsPlan.find(params["encumbrance"]["savings_plan_id"])
+        planUser = sPlan.user
+        authorize_user_resource(sPlan)
+        encParams = params["encumbrance"]
+        enc = planUser.encumbrances.build(savings_plan: sPlan, encumbrance_name: encParams["encumbrance_name"], amount: encParams["amount"])
         enc.save
         encs = current_user.encumbrances
         render json: encs.to_json()
@@ -32,7 +35,7 @@ class EncumbrancesController < ApplicationController
     private
 
     def enc_params
-        params.require(:encumbrance).permit(:savings_plan, :id, :encumbrance_name, :amount)
+        params.require(:encumbrance).permit(:savings_plan, :encumbrance_name, :amount)
     end
 
 end

@@ -32,4 +32,14 @@ class SavingsAdapter {
         return await json
     }
 
+    async addEncumbrance(params) {
+        const resp = await fetch(`${this.baseURL}/encumbrances`, {
+            method: 'POST',
+            headers: this.headers,
+            body: JSON.stringify(params)
+        })
+        const json = await this.baseAdapter.checkStatus(resp)
+        return await json
+    }
+
 }

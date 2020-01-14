@@ -8,7 +8,7 @@ class SavingsPage extends PageManager {
     }
 
     initBindingsAndEventListeners() {
-        // this.encumbrances.setAddEncumbranceLineButtonListener();
+        this.encumbrances.setAddEncumbranceLineButtonListener();
         // this.encumbrances.setEditEncumbrancesButtonListener();
         this.setAddSavingsButtonListener();
         this.setEditValuesButtonListener();
@@ -21,6 +21,8 @@ class SavingsPage extends PageManager {
                 savingsPage.encumbrances.handleEncumbranceEditSubmit(e)
             } else if(e.target && e.target.id === "editSummarySubmit") {
                 savingsPage.handleValueEditSubmit(e)
+            } else if(e.target && e.target.id === "saveLine") {
+                savingsPage.encumbrances.handleAddLineSubmit(e)
             }
          });
     }
@@ -31,7 +33,7 @@ class SavingsPage extends PageManager {
             const savingsPlan = await this.adapter.getAsset("savings")
             const wedding = await this.adapter.getAsset("wedding")
             // call insert functions
-            this.encumbrances.insertEncumbrances(savingsPlan.encumbrances);
+            this.encumbrances.insertEncumbrances(savingsPlan.encumbrances, savingsPlan.id);
             this.insertSavingsIdToForms(savingsPlan)
             this.insertSavingsSummary(savingsPlan, wedding.date);
         } catch {
@@ -204,7 +206,7 @@ class SavingsPage extends PageManager {
                             <table id="encumbranceTable">
                                 <th class="savingsPageTableHeader" colspan="2">Monthly Encumbrances</th>
                                 <!-- ROWS WILL GO HERE -->
-                                <tr>
+                                <tr id="encButtonRow">
                                     <td class="tableButton"><button class="addLine">Add Line</button></td>
                                     <td class="tableButton"><button class="editLines">Edit Lines</button></td>
                                 </tr>
@@ -227,7 +229,7 @@ class SavingsPage extends PageManager {
                                 <table id="addSavingsTable">
                                     <th class="savingsPageTableHeader">Add to Savings</th>
                                     <tr>
-                                        <td class="fullRowEntry"><input type="text" id="savingsEntry" data-form="addSavings" placeholder="Enter only numbers, no '$' or commas."></input></td>
+                                        <td class="fullRowEntry"><input type="text" id="savingsEntry" data-form="addSavings" placeholder="Numbers only, no $ or commas."></input></td>
                                     </tr>
                                     <tr>
                                         <td class="tableButton"><button type="submit" id="savingsSubmit" class="addSavingsButton">Add</button></td>
