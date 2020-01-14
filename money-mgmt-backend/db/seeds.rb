@@ -36,15 +36,15 @@ deez_nups.build_expenses(
 )
 
 bride = User.create(
-    first_name: "Sarah",
-    last_name: "Anderson", 
-    role: "Bride", 
+    first_name: "Benny",
+    last_name: "Hill", 
+    role: "Groom", 
     wedding: deez_nups,
-    email: "sarah@gmail.com",
-    password: "sto0fski"
+    email: "benny@example.com",
+    password: "password"
 )
 
-bsp = bride.build_savings_plan(income_per_month: 2500)
+bsp = bride.build_savings_plan(income_per_month: 2500, monthly_savings_goal: 500)
 bsp.encumbrances.build(encumbrance_name: "rent", amount: 575)
 bsp.encumbrances.build(encumbrance_name: "student loans", amount: 330)
 bsp.encumbrances.build(encumbrance_name: "car insurance", amount: 150)
@@ -52,15 +52,15 @@ bsp.encumbrances.build(encumbrance_name: "internet", amount: 85)
 bride.save
 
 groom = User.create(
-    first_name: "Cameron",
-    last_name: "Bailey",
-    role: "Groom",
+    first_name: "Allison",
+    last_name: "Brie",
+    role: "Bride",
     wedding: deez_nups,
-    email: "cameron@gmail.com",
-    password: "sto0fski"
+    email: "allison@example.com",
+    password: "password"
 )
 
-gsp = groom.build_savings_plan(income_per_month: 3300)
+gsp = groom.build_savings_plan(income_per_month: 3300, monthly_savings_goal: 500)
 gsp.encumbrances.build(encumbrance_name: "rent", amount: 575)
 gsp.encumbrances.build(encumbrance_name: "student loans", amount: 400)
 gsp.encumbrances.build(encumbrance_name: "utilities", amount: 100)
