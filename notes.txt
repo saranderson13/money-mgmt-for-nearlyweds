@@ -1,3 +1,9 @@
+BLOG POST: Event listeners for dynamically created buttons, and adding in checkbox protection.
+
+
+
+
+
 THE ROLES OF ADAPTERS, PAGE MANAGERS, THE ROUTER, & APP.JS
 
  - APP.JS constructs the main application object. When the app object is constructed, the following things happen:

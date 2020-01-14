@@ -42,4 +42,14 @@ class SavingsAdapter {
         return await json
     }
 
+    async editEncumbrances(params) {
+        const editResp = await fetch(`${this.baseURL}/savings/encumbrances`, {
+            method: 'PATCH',
+            headers: this.headers,
+            body: JSON.stringify(params)
+        })
+        const json = await this.baseAdapter.checkStatus(editResp)
+        return await json
+    }
+
 }

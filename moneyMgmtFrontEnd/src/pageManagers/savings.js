@@ -20,7 +20,7 @@ class SavingsPage extends PageManager {
             if (e.target.type !== "checkbox") {
                 e.preventDefault()
                 if(e.target && e.target.id === "saveEdits") {
-                    savingsPage.encumbrances.handleEncumbranceEditSubmit(e)
+                    savingsPage.handleEncumbranceEditSubmit(e)
                 } else if(e.target && e.target.id === "editSummarySubmit") {
                     savingsPage.handleValueEditSubmit(e)
                 } else if(e.target && e.target.id === "saveLine") {
@@ -71,7 +71,7 @@ class SavingsPage extends PageManager {
             encTotal = plan.encumbrances.map(e => e.amount).reduce((a,c) => a + c)
         }
         const remainingIncome = plan.income_per_month - encTotal
-        const recommendedGoal = remainingIncome / 2
+        const recommendedGoal = Math.ceil(remainingIncome / 2)
         const projectedOnPlan = plan.monthly_savings_goal * this.remainingMonths(weddingDate)
         return {encTotal, remainingIncome, recommendedGoal, projectedOnPlan}
     }
@@ -123,7 +123,6 @@ class SavingsPage extends PageManager {
         const buttonRow = editButton.parentNode
         const allFields = document.querySelectorAll('[data-editable="true"]');
 
-        console.log(editButton)
         editButton.addEventListener("click", e => {
             e.preventDefault();
             
@@ -177,6 +176,34 @@ class SavingsPage extends PageManager {
         } catch {
             console.log(err)
         }
+    }
+
+
+    async handleEncumbranceEditSubmit(event) {
+        event.preventDefault();
+        const eForm = document.getElementById('encumbranceForm')
+        const eRows = document.querySelectorAll('#encumbranceTable tr.eLine')
+        const params = { encumbrances: { savings_id: eForm.dataset.planId, lines: [] } }
+
+        eRows.forEach( row => {
+            let encSet = {
+                id: row.dataset.eId,
+                deletable: row.querySelector('[type=checkbox]').checked,
+                encumbrance_name: row.querySelector('.tableText input').value,
+                amount: row.querySelector('.tableNum input').value
+            }
+            params.encumbrances.lines.push(encSet)
+        })
+
+        try {
+            const resp = await this.adapter.editEncumbrances(params)
+            this.encumbrances.insertUpdatedEncumbrances(resp.encumbrances, resp.id)
+        } catch {
+            console.log(err)
+        }
+
+
+
     }
 
 

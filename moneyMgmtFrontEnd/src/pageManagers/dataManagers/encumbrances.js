@@ -41,15 +41,19 @@ class EncumbranceData extends DataManager {
     }
 
     resetEncumbranceButtons() {
+        const encTableHeader = document.querySelector('#encumbranceTable .savingsPageTableHeader')
+        encTableHeader.colSpan = "2"
         const bRow = document.getElementById('encButtonRow')
         bRow.innerHTML = '<td class="tableButton"><button class="addLine">Add Line</button></td><td class="tableButton"><button class="editLines">Edit Lines</button></td>'
         this.setAddEncumbranceLineButtonListener()
-        // this.setEditEncumbrancesButtonListener()  
+        this.setEditEncumbrancesButtonListener()  
     }
 
-    // insertUpdatedEncumbrances(encumbrances) {
-
-    // }
+    insertUpdatedEncumbrances(encumbrances, planId) {
+        this.clearEncumbrances()
+        this.insertEncumbrances(encumbrances, planId)
+        this.resetEncumbranceButtons()
+    }
 
     updateSummaryTotals() {
 
@@ -141,7 +145,7 @@ class EncumbranceData extends DataManager {
 
                 // Replace nameCell & numCell with inputs
                 nameCell.innerHTML = `<input type="text" name="editEncName" value="${nameCell.innerText}" required></input>`
-                numCell.innerHTML = `<input type="text" name="editEncAmount" value="${numCell.innerText}" required></input>`
+                numCell.innerHTML = `<input type="text" name="editEncAmount" value="${this.formatCostForCalculation(numCell.innerText)}" required></input>`
             })
 
             // Adjust table header to fit third column
@@ -165,10 +169,26 @@ class EncumbranceData extends DataManager {
         })
     }
 
-    async handleEncumbranceEditSubmit(event) {
-        event.preventDefault();
-        console.log("attempting to submit changes")
-    }
+    // async handleEncumbranceEditSubmit(event) {
+    //     event.preventDefault();
+    //     console.log("attempting to submit changes")
+
+    //     const encTable = document.getElementById('encumbranceTable')
+
+    //     // check for checked checkboxes
+    //     const checkboxes = encTable.querySelectorAll('[type=checkbox]')
+    //     const deletables = []
+    //     checkboxes.forEach( box => {
+    //         if (box.checked) { deletables.push(box.dataset.eId) }
+    //     })
+
+
+
+
+
+
+
+    // }
 
 
 
