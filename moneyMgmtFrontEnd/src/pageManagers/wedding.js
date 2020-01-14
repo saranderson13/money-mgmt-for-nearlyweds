@@ -29,6 +29,7 @@ class WeddingPage extends PageManager {
             this.insertCountdown(wedding)
             this.expenses.insertExpenses(expenses)
             this.expenses.insertTotalExpenses();
+            this.insertSavingsValues(wedding);
         } catch (err) {
             this.handleAuthorizationError(err)
         }
@@ -67,6 +68,73 @@ class WeddingPage extends PageManager {
         const countdownString = `${countdownDays} days until the big day!`
         countdownContainer.innerHTML = countdownString
     }
+
+    insertSavingsValues(wedding) {
+        // BEGIN SAVINGS SUMMARY TABLE
+            const u1NameCell = document.querySelector('[data-savings-category="tableHeader"][data-user="1"]')
+            const u2NameCell = document.querySelector('[data-savings-category="tableHeader"][data-user="2"]')
+            const u1 = wedding.users[0]
+
+            u1NameCell.innerText = u1.first_name
+            const u1IncomeCell = document.querySelector('[data-savings-category="income"][data-user="1"]')
+                u1IncomeCell.innerText = `$${this.formatCostForDisplay(u1.savings_plan.income_per_month)}`
+            const u1ExpCell = document.querySelector('[data-savings-category="expenses"][data-user="1"]')
+                if( u1.savings_plan.encumbrances.length > 0 ){
+                    u1ExpCell.innerText = `$${this.formatCostForDisplay(u1.savings_plan.encumbrances.map(e => e.amount).reduce((a,c) => a + c))}`
+                } else {
+                    u1ExpCell.innerText = "$0"
+                }
+            const u1SavingsGoal = document.querySelector('[data-savings-category="goal"][data-user="1"]')
+                u1SavingsGoal.innerText = `$${this.formatCostForDisplay(u1.savings_plan.monthly_savings_goal)}`
+
+            if (wedding.users.length === 2) {
+                const u2 = wedding.users[1]
+                u2NameCell.innerText = u2.first_name
+                const u2IncomeCell = document.querySelector('[data-savings-category="income"][data-user="2"]')
+                    u2IncomeCell.innerText = `$${this.formatCostForDisplay(u2.savings_plan.income_per_month)}`
+                const u2ExpCell = document.querySelector('[data-savings-category="expenses"][data-user="2"]')
+                    if( u2.savings_plan.encumbrances.length > 0 ){
+                        u2ExpCell.innerText = `$${this.formatCostForDisplay(u2.savings_plan.encumbrances.map(e => e.amount).reduce((a,c) => a + c))}`
+                    } else {
+                        u2ExpCell.innerText = "$0"
+                    }
+                const u2SavingsGoal = document.querySelector('[data-savings-category="goal"][data-user="2"]')
+                    u2SavingsGoal.innerText = `$${this.formatCostForDisplay(u2.savings_plan.monthly_savings_goal)}`
+            } else {
+                u2NameCell.innerText = "Awaiting Partner"
+            }
+        // END SAVINGS SUMMARY TABLE
+
+        // BEGIN FULL SUMMARY TABLE
+            const u2 = wedding.users[0]
+            let totalWeddingExpenses = this.formatCostForCalculation(document.querySelector('[data-summary-category="totalExpenses"]').innerText)
+            let totalSavings = 0
+            let remainingGoal = 0
+            let anticipatedOnPlans = 0
+            let bottomLine = 0
+
+            if (wedding.users.length === 2) {
+                const u2 = wedding.users[1]
+                totalSavings = u1.savings_plan.current_savings + u2.savings_plan.current_savings
+                remainingGoal = totalWeddingExpenses - totalSavings
+                anticipatedOnPlans = (u1.savings_plan.monthly_savings_goal + u2.savings_plan.monthly_savings_goal) * this.remainingMonths(wedding.date)
+                bottomLine = anticipatedOnPlans - remainingGoal
+            } else {
+
+            }
+
+            const totalSavingsCell = document.querySelector('[data-summary-category="currentSavings"]')
+                  totalSavingsCell.innerText = `$${this.formatCostForDisplay(totalSavings)}`
+            const remainingGoalCell = document.querySelector('[data-summary-category="remainingInGoal"]')
+                  remainingGoalCell.innerText = `$${this.formatCostForDisplay(remainingGoal)}`
+            const anticipatedOnPlansCell = document.querySelector('[data-summary-category="anticipatedOnPlan"]')
+                  anticipatedOnPlansCell.innerText = `$${this.formatCostForDisplay(anticipatedOnPlans)}`
+            const bottomLineCell = document.querySelector('[data-summary-category="bottomLine"]')
+                  bottomLineCell.innerText = `$${this.formatCostForDisplay(bottomLine)}`
+
+        // END FULL SUMMARY TABLE
+    }
+
 
     get staticHTML() {
         return (`
@@ -175,23 +243,23 @@ class WeddingPage extends PageManager {
                     <th class="weddingPageTable" colspan="3">Savings Summary</th>
                     <tr>
                         <th class="weddingPageTable"> </th>
-                        <th class="weddingPageTable">User 1</th>
-                        <th class="weddingPageTable">User 2</th>
+                        <th class="weddingPageTable" data-savings-category="tableHeader" data-user="1">User 1</th>
+                        <th class="weddingPageTable" data-savings-category="tableHeader" data-user="2">User 2</th>
                     </tr>
                     <tr>
                         <td class="tableText">Income per Month</td>
-                        <td class="tableNum" data-savings-category="u1Income"></td>
-                        <td class="tableNum" data-savings-category="u2Income"></td>
+                        <td class="tableNum" data-savings-category="income" data-user="1"></td>
+                        <td class="tableNum" data-savings-category="income"data-user="2"></td>
                     </tr>
                     <tr>
                         <td class="tableText">Expenses per Month</td>
-                        <td class="tableNum" data-savings-category="u1Expenses"></td>
-                        <td class="tableNum" data-savings-category="u2Expenses"></td>
+                        <td class="tableNum" data-savings-category="expenses" data-user="1"></td>
+                        <td class="tableNum" data-savings-category="expenses"data-user="2"></td>
                     </tr>
                     <tr>
-                        <td class="tableText">Recommended Monthly Savings Goal</td>
-                        <td class="tableNum" data-savings-category="u1Recommendation"></td>
-                        <td class="tableNum" data-savings-category="u2Recommendation"></td>
+                        <td class="tableText">Monthly Savings Goal</td>
+                        <td class="tableNum" data-savings-category="goal" data-user="1"></td>
+                        <td class="tableNum" data-savings-category="goal" data-user="2"></td>
                     </tr>   
                 </table></div> 
                 <!-- End Savings Table -->

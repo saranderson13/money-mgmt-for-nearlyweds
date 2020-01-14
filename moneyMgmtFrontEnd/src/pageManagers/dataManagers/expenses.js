@@ -37,15 +37,15 @@ class ExpenseData extends DataManager {
         this.setEditButtonListener()
     }
 
-    updateSummaryTotals() {
-        // ALL SUMMARY BOX UPDATES WILL BE CALLED HERE
-        // WILL NEED ACCESS TO TOTALS FROM SAVINGS - MAY NEED TO MOVE TO WEDDING PAGE
-        this.insertTotalExpenses()
-        // current savings
-        // remaining to meet goal
-        // anticipated savings to be accumulated on plan
-        // bottom line - will your anticipated savings surpass what is needed to meet goal
-    }
+    // updateSummaryTotals() {
+    //     // ALL SUMMARY BOX UPDATES WILL BE CALLED HERE
+    //     // WILL NEED ACCESS TO TOTALS FROM SAVINGS - MAY NEED TO MOVE TO WEDDING PAGE
+    //     this.insert()
+    //     // current savings
+    //     // remaining to meet goal
+    //     // anticipated savings to be accumulated on plan
+    //     // bottom line - will your anticipated savings surpass what is needed to meet goal
+    // }
 
     insertTotalExpenses() {
         // Get box to insert total into
