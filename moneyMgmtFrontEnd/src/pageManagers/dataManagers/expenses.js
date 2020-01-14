@@ -37,15 +37,26 @@ class ExpenseData extends DataManager {
         this.setEditButtonListener()
     }
 
-    // updateSummaryTotals() {
-    //     // ALL SUMMARY BOX UPDATES WILL BE CALLED HERE
-    //     // WILL NEED ACCESS TO TOTALS FROM SAVINGS - MAY NEED TO MOVE TO WEDDING PAGE
-    //     this.insert()
-    //     // current savings
-    //     // remaining to meet goal
-    //     // anticipated savings to be accumulated on plan
-    //     // bottom line - will your anticipated savings surpass what is needed to meet goal
-    // }
+    updateSummaryTotals() {
+        // ALL SUMMARY BOX UPDATES WILL BE CALLED HERE
+        // WILL NEED ACCESS TO TOTALS FROM SAVINGS - MAY NEED TO MOVE TO WEDDING PAGE
+        const remainingGoalCell = document.querySelector('td[data-summary-category=remainingInGoal]')
+        const bottomLineCell = document.querySelector('td[data-summary-category=bottomLine]')
+
+        const totalExp = this.insertTotalExpenses()
+        const currentSavings = document.querySelector('td[data-summary-category=currentSavings]').innerText
+        const anticipatedSavings = document.querySelector('td[data-summary-category=anticipatedOnPlan]').innerText
+
+        const totalRemaining = totalExp - this.formatCostForCalculation(currentSavings)
+        
+        remainingGoalCell.innerText = `$${this.formatCostForDisplay(totalRemaining)}`
+
+        const bottomLine = this.formatCostForCalculation(anticipatedSavings) - totalRemaining
+        bottomLineCell.innerText = `$${this.formatCostForDisplay(bottomLine)}`
+
+        // remaining to meet goal
+        // bottom line - will your anticipated savings surpass what is needed to meet goal
+    }
 
     insertTotalExpenses() {
         // Get box to insert total into
@@ -59,6 +70,7 @@ class ExpenseData extends DataManager {
 
         // Insert the reduced amount from the array into the total box, formatted for display
         totalBox.innerText = this.formatCostForDisplay(`$${amounts.reduce((a, c) => a + c, 0)}`)
+        return amounts.reduce((a, c) => a + c, 0)
     }
 
     setEditButtonListener() {

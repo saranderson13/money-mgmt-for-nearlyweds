@@ -53,6 +53,13 @@ class EncumbranceData extends DataManager {
         this.clearEncumbrances()
         this.insertEncumbrances(encumbrances, planId)
         this.resetEncumbranceButtons()
+
+        let encTotal = 0
+        if( encumbrances.length > 0 ){
+            encTotal = encumbrances.map(e => e.amount).reduce((a,c) => a + c)
+        }
+        const totalEncCell = document.querySelector('[data-summary-category = encTotal]')
+        totalEncCell.innerHTML = `$${this.formatCostForDisplay(encTotal)}`
     }
 
     updateSummaryTotals() {
@@ -168,27 +175,6 @@ class EncumbranceData extends DataManager {
             buttonCell.appendChild(saveEdits)
         })
     }
-
-    // async handleEncumbranceEditSubmit(event) {
-    //     event.preventDefault();
-    //     console.log("attempting to submit changes")
-
-    //     const encTable = document.getElementById('encumbranceTable')
-
-    //     // check for checked checkboxes
-    //     const checkboxes = encTable.querySelectorAll('[type=checkbox]')
-    //     const deletables = []
-    //     checkboxes.forEach( box => {
-    //         if (box.checked) { deletables.push(box.dataset.eId) }
-    //     })
-
-
-
-
-
-
-
-    // }
 
 
 

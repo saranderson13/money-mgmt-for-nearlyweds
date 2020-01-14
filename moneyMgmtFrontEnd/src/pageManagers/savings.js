@@ -52,6 +52,26 @@ class SavingsPage extends PageManager {
         summaryForm.dataset.savingsId = savings.id
     }
 
+    insertSavingsSummaryOnEncEdit(plan) {
+        // Set enc total cell
+        let encTotal = 0
+        if( plan.encumbrances.length > 0 ){
+            encTotal = plan.encumbrances.map(e => e.amount).reduce((a,c) => a + c)
+        }
+        const totalEncCell = document.querySelector('[data-summary-category = encTotal]')
+        totalEncCell.innerHTML = `$${this.formatCostForDisplay(encTotal)}`
+
+        // set remaining income after enc
+        const remainingIncomeCell = document.querySelector('[data-summary-category = remainingIncome]')
+        const remainingIncome = plan.income_per_month - encTotal
+        remainingIncomeCell.innerHTML = `$${this.formatCostForDisplay(remainingIncome)}`
+
+        // set recommended goal
+        const recommendedGoalCell = document.querySelector('[data-summary-category = recommendedGoal]')
+        const recommendedGoal = Math.ceil(remainingIncome / 2)
+        recommendedGoalCell.innerHTML = `$${this.formatCostForDisplay(recommendedGoal)}`
+    }
+
     insertSavingsSummary(plan, weddingDate) {
         const fieldValues = this.summaryCalculations(plan, weddingDate)
         fieldValues.income = plan.income_per_month;
@@ -140,6 +160,7 @@ class SavingsPage extends PageManager {
             submitButton.className = "editSavings"
             submitButton.innerText = "Submit"
             buttonRow.appendChild(submitButton)
+            
         })
     }
 
@@ -194,11 +215,15 @@ class SavingsPage extends PageManager {
             }
             params.encumbrances.lines.push(encSet)
         })
+        
 
         try {
             const resp = await this.adapter.editEncumbrances(params)
             this.encumbrances.insertUpdatedEncumbrances(resp.encumbrances, resp.id)
-        } catch {
+
+            // Update summary table
+            this.insertSavingsSummaryOnEncEdit(resp)
+        } catch(err) {
             console.log(err)
         }
 
