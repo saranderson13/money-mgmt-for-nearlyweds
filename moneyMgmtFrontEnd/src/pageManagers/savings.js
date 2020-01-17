@@ -17,7 +17,7 @@ class SavingsPage extends PageManager {
         // Listeners for dynamic buttons.
         const savingsPage = this.parent.router.routes.savings
         this.container.addEventListener('click',function(e){
-            if (e.target.type !== "checkbox") {
+            if (e.target.type !== "checkbox" && e.target.type !== "radio" && e.target.id !== "login-button" && e.target.id !== "signup-button") {
                 e.preventDefault()
                 if(e.target && e.target.id === "saveEdits") {
                     savingsPage.handleEncumbranceEditSubmit(e)
@@ -216,13 +216,7 @@ class SavingsPage extends PageManager {
                     buttonRow.appendChild(editButton)
                     this.setEditValuesButtonListener()
                 }
-
-                // // Add Edit Button
-                // const editButton = document.createElement('button')
-                // editButton.className = "editValues"
-                // editButton.innerText = "Edit Values"
-                // buttonRow.appendChild(editButton)
-                // this.setEditValuesButtonListener()
+                
             } catch (err) {
                 console.log(err)
             }

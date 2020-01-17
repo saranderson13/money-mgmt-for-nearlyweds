@@ -11,7 +11,7 @@ class WeddingPage extends PageManager {
         const weddingPage = this.parent.router.routes.wedding
         this.expenses.setEditButtonListener();
         this.container.addEventListener('click',function(e){
-            if (e.target.type !== "checkbox") {
+            if (e.target.type !== "checkbox" && e.target.type !== "radio" && e.target.id !== "login-button" && e.target.id !== "signup-button") {
                 e.preventDefault()
                 if(e.target && e.target.id === 'expenseSubmit'){
                     weddingPage.expenses.handleExpenseEditSubmit(e)

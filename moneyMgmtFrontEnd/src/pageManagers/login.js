@@ -36,7 +36,7 @@ class LoginPage extends PageManager {
                     <input type="password" id="userPassword" class="form-control" placeholder="Password" required >
                 </div>
             </div>
-            <button type="submit" id="signup-button" class="btn btn-primary">Log In</button>
+            <button type="submit" id="login-button" class="btn btn-primary">Log In</button>
         </form>
         `) 
     }
