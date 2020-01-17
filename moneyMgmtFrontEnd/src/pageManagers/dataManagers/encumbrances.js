@@ -98,8 +98,8 @@ class EncumbranceData extends DataManager {
     async handleAddLineSubmit(e) {
         e.preventDefault();
         
-        const fields = document.querySelectorAll('#encumbranceForm input')
-        const [encumbrance_name, amount] = Array.from(fields).map(i => i.value.replace(/[^0-9]/g, ""))
+        const encumbrance_name = document.querySelector('#encumbranceForm input#newEncName').value
+        const amount = document.querySelector('#encumbranceForm input#newEncAmount').value.replace(/[^0-9]/g, "")
         const savings_plan_id = document.querySelector('#encumbranceForm').dataset.planId
         if ([encumbrance_name, amount].some(this.emptyString)) {
             this.page.handleAlert("Encumbrance fields must not be empty.", "danger")
@@ -109,7 +109,6 @@ class EncumbranceData extends DataManager {
                     savings_plan_id, encumbrance_name, amount
                 }
             }
-
             try {
                 const resp = await this.adapter.addEncumbrance(params)
                 this.clearEncumbrances()

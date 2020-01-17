@@ -106,12 +106,12 @@ class WeddingPage extends PageManager {
         // END SAVINGS SUMMARY TABLE
 
         // BEGIN FULL SUMMARY TABLE
-            const u2 = wedding.users[0]
+            // const u1 = wedding.users[0]
             let totalWeddingExpenses = this.formatCostForCalculation(document.querySelector('[data-summary-category="totalExpenses"]').innerText)
-            let totalSavings = 0
-            let remainingGoal = 0
-            let anticipatedOnPlans = 0
-            let bottomLine = 0
+            let totalSavings = u1.savings_plan.current_savings
+            let remainingGoal = totalWeddingExpenses - totalSavings
+            let anticipatedOnPlans = u1.savings_plan.monthly_savings_goal * this.remainingMonths(wedding.date)
+            let bottomLine = anticipatedOnPlans - remainingGoal
 
             if (wedding.users.length === 2) {
                 const u2 = wedding.users[1]
@@ -120,6 +120,7 @@ class WeddingPage extends PageManager {
                 anticipatedOnPlans = (u1.savings_plan.monthly_savings_goal + u2.savings_plan.monthly_savings_goal) * this.remainingMonths(wedding.date)
                 bottomLine = anticipatedOnPlans - remainingGoal
             } else {
+
 
             }
 

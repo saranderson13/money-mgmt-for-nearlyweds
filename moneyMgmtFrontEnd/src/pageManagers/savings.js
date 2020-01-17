@@ -71,7 +71,6 @@ class SavingsPage extends PageManager {
 
         // Iterate over the summary fields to add appropriate data.
         summaryFields.forEach( function(field) {
-
             // The data-summary category will correspond to a key in the fieldValues object.
             let fieldCategory = field.dataset.summaryCategory;
             let formattedValue = this.formatCostForDisplay(fieldValues[fieldCategory])
@@ -206,15 +205,24 @@ class SavingsPage extends PageManager {
 
                 // Remove Submit
                 const submitButton = document.getElementById('editSummarySubmit')
-                const buttonRow = submitButton.parentNode
-                buttonRow.removeChild(submitButton)
+                if(submitButton) {
+                    const buttonRow = submitButton.parentNode
+                    buttonRow.removeChild(submitButton)
 
-                // Add Edit Button
-                const editButton = document.createElement('button')
-                editButton.className = "editValues"
-                editButton.innerText = "Edit Values"
-                buttonRow.appendChild(editButton)
-                this.setEditValuesButtonListener()
+                    // Add Edit Button
+                    const editButton = document.createElement('button')
+                    editButton.className = "editValues"
+                    editButton.innerText = "Edit Values"
+                    buttonRow.appendChild(editButton)
+                    this.setEditValuesButtonListener()
+                }
+
+                // // Add Edit Button
+                // const editButton = document.createElement('button')
+                // editButton.className = "editValues"
+                // editButton.innerText = "Edit Values"
+                // buttonRow.appendChild(editButton)
+                // this.setEditValuesButtonListener()
             } catch (err) {
                 console.log(err)
             }
@@ -246,7 +254,10 @@ class SavingsPage extends PageManager {
             }
         })
 
-        if(alerted) {
+        console.log(params)
+        console.log(alerted)
+
+        if(!alerted) {
             try {
                 const resp = await this.adapter.editEncumbrances(params)
                 this.encumbrances.insertUpdatedEncumbrances(resp.encumbrances, resp.id)
