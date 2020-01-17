@@ -56,4 +56,8 @@ class PageManager {
         }
     }
 
+    emptyString(string) {
+        return string === "" ? true : false
+    }
+
 }

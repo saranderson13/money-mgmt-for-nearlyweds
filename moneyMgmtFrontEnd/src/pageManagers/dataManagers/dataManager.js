@@ -1,7 +1,8 @@
 class DataManager {
 
-    constructor(adapter) {
+    constructor(adapter, page) {
         this.adapter = adapter
+        this.page = page
     }
 
     formatCostForDisplay(num) {
@@ -25,6 +26,10 @@ class DataManager {
     formatCostForCalculation(string) {
         // Takes a string (ex: "$1,000") and returns a number (=> 1000)
         return parseInt(string.replace(/[^0-9]/g, ""), 10)
+    }
+
+    emptyString(string) {
+        return string === "" ? true : false
     }
 
 

@@ -4,7 +4,7 @@ MMfN is a web application to help newly engaged couples with the potentially dau
 
 ## Installation
 
-For the moment, to install the application, download the repo and run 'bundle install'. Then migrate the db the database, and start your rails server. For an example account, you can seed the database, and login with the credentials below. (If you are seeding, do that before starting the server.) However, once you've started the server, even if you don't seed you're all set to make your own account(s).
+For the moment, to install the application, download the repo and run 'bundle install'. Then migrate the database, and start your rails server. For an example account, you can seed the database, and login with the credentials below. (If you are seeding, do that before starting the server.) However, once you've started the server, even if you don't seed you're all set to make your own account(s).
 
 ```bash
 bundle install
@@ -35,7 +35,7 @@ If your partner has already signed up, you will select the other radio button, "
 
 Once you have signed up, regardless of whether both parties have joined, you are able to edit your anticipated expenses, (on the Wedding Page), and enter your personal financial information, (on the Savings Page). You may also use the savings page to add to your current savings - this will track how much you've saved vs. how much you will still need to save.
 
-Once some numbers are entered the application will begin to build a picture of how much needs to be saved, and what you can save to meet that goal. On the savings page, an amount is reccommended for you, but you will also enter the amount that you would actually like to save, but editing the summary table. The recommended amount is NOT the amount that will guarantee that you can save enough for your wedding. It is half of your remaining income after encumbrances. You may need to enter more (or less) than that to meet your goal.
+Once some numbers are entered the application will begin to build a picture of how much needs to be saved, and what you can save to meet that goal. On the savings page, an amount is reccommended for you, but you will also enter the amount that you would actually like to save, by editing the summary table. The recommended amount is NOT the amount that will guarantee that you can save enough for your wedding. It is half of your remaining income after encumbrances. You may need to enter more (or less) than that to meet your goal.
 
 Once your partner has also entered their financial information, the Wedding Page will reflect both sets of finances and give you a full summary of whether, together, you will be able to meet your goal.
 

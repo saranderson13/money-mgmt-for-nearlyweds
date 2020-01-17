@@ -3,7 +3,7 @@ class WeddingPage extends PageManager {
     constructor(container, adapter, parent) {
         super(container)
         this.adapter = new WeddingAdapter(adapter);
-        this.expenses = new ExpenseData(this.adapter);
+        this.expenses = new ExpenseData(this.adapter, this);
         this.parent = parent
     }
 
@@ -164,67 +164,67 @@ class WeddingPage extends PageManager {
                         <th class="weddingPageTable" colspan="2">Projected Expenses</th class="weddingPageTable">
                         <tr>
                             <td class="tableText">Venue</td>
-                            <td class="tableNum" data-expense-category="venue"></td>
+                            <td class="tableNum" data-expense-category="venue" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Catering</td>
-                            <td class="tableNum" data-expense-category="catering"></td>
+                            <td class="tableNum" data-expense-category="catering" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Photography</td>
-                            <td class="tableNum" data-expense-category="photography"></td>
+                            <td class="tableNum" data-expense-category="photography" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Videography</td>
-                            <td class="tableNum" data-expense-category="videography"></td>
+                            <td class="tableNum" data-expense-category="videography" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Flowers</td>
-                            <td class="tableNum" data-expense-category="flowers"></td>
+                            <td class="tableNum" data-expense-category="flowers" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Cake</td>
-                            <td class="tableNum" data-expense-category="cake"></td>
+                            <td class="tableNum" data-expense-category="cake" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Gown & Tux</td>
-                            <td class="tableNum" data-expense-category="attire"></td>
+                            <td class="tableNum" data-expense-category="attire" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Band</td>
-                            <td class="tableNum" data-expense-category="band"></td>
+                            <td class="tableNum" data-expense-category="band" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">DJ & MC</td>
-                            <td class="tableNum" data-expense-category="djmc"></td>
+                            <td class="tableNum" data-expense-category="djmc" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Invitations</td>
-                            <td class="tableNum" data-expense-category="invitations"></td>
+                            <td class="tableNum" data-expense-category="invitations" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Favors</td>
-                            <td class="tableNum" data-expense-category="favors"></td>
+                            <td class="tableNum" data-expense-category="favors" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Officiant</td>
-                            <td class="tableNum" data-expense-category="officiant"></td>
+                            <td class="tableNum" data-expense-category="officiant" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Salon & Beauty</td>
-                            <td class="tableNum" data-expense-category="beauty"></td>
+                            <td class="tableNum" data-expense-category="beauty" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Wedding Bands</td>
-                            <td class="tableNum" data-expense-category="jewelry"></td>
+                            <td class="tableNum" data-expense-category="jewelry" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Equipment Rentals</td>
-                            <td class="tableNum" data-expense-category="rentals"></td>
+                            <td class="tableNum" data-expense-category="rentals" required></td>
                         </tr>
                         <tr>
                             <td class="tableText">Miscellaneous</td>
-                            <td class="tableNum" data-expense-category="other"></td>
+                            <td class="tableNum" data-expense-category="other" required></td>
                         </tr>
                         <tr>
                             <td class="tableButton" colspan="2"><button class="editExpense">Edit</button></td>

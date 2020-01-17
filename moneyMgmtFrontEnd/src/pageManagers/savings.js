@@ -3,7 +3,7 @@ class SavingsPage extends PageManager {
     constructor(container, adapter, parent) {
         super(container)
         this.adapter = new SavingsAdapter(adapter);
-        this.encumbrances = new EncumbranceData(this.adapter)
+        this.encumbrances = new EncumbranceData(this.adapter, this)
         this.encumbrances.parent = this
         this.parent = parent
     }
@@ -35,56 +35,51 @@ class SavingsPage extends PageManager {
             // fetch data
             const savingsPlan = await this.adapter.getAsset("savings")
             const wedding = await this.adapter.getAsset("wedding")
+
             // call insert functions
             this.encumbrances.insertEncumbrances(savingsPlan.encumbrances, savingsPlan.id);
             this.insertSavingsIdToForms(savingsPlan)
             this.insertSavingsSummary(savingsPlan, wedding.date);
-        } catch {
+        } catch(err) {
             this.handleAuthorizationError(err)
         }
     }
 
+    // This is to make sure submitted forms will pass the savings plan to the backend.
     insertSavingsIdToForms(savings) {
+        // Add id to Add Savings form.
         const addForm = document.querySelector('form#addSavingsForm')
         addForm.dataset.savingsId = savings.id
 
+        // Add id to Edit Summary form.
         const summaryForm = document.querySelector('form#savingsSummary')
         summaryForm.dataset.savingsId = savings.id
     }
 
-    insertSavingsSummaryOnEncEdit(plan) {
-        // Set enc total cell
-        let encTotal = 0
-        if( plan.encumbrances.length > 0 ){
-            encTotal = plan.encumbrances.map(e => e.amount).reduce((a,c) => a + c)
-        }
-        const totalEncCell = document.querySelector('[data-summary-category = encTotal]')
-        totalEncCell.innerHTML = `$${this.formatCostForDisplay(encTotal)}`
-
-        // set remaining income after enc
-        const remainingIncomeCell = document.querySelector('[data-summary-category = remainingIncome]')
-        const remainingIncome = plan.income_per_month - encTotal
-        remainingIncomeCell.innerHTML = `$${this.formatCostForDisplay(remainingIncome)}`
-
-        // set recommended goal
-        const recommendedGoalCell = document.querySelector('[data-summary-category = recommendedGoal]')
-        const recommendedGoal = Math.ceil(remainingIncome / 2)
-        recommendedGoalCell.innerHTML = `$${this.formatCostForDisplay(recommendedGoal)}`
-    }
-
+    // This inserts values into the summary table on INITIAL LOAD
     insertSavingsSummary(plan, weddingDate) {
+        // Grab all calculated values.
         const fieldValues = this.summaryCalculations(plan, weddingDate)
+
+        // Add values that do not need to be calculated to the object. (pulled straight from plan object)
         fieldValues.income = plan.income_per_month;
         fieldValues.currentSavings = plan.current_savings;
         fieldValues.declaredGoal = plan.monthly_savings_goal;
+
+        // Grab all fields from the summary table.
         const summaryFields = document.querySelectorAll('[data-summary-category]')
+
+        // Iterate over the summary fields to add appropriate data.
         summaryFields.forEach( function(field) {
+
+            // The data-summary category will correspond to a key in the fieldValues object.
             let fieldCategory = field.dataset.summaryCategory;
             let formattedValue = this.formatCostForDisplay(fieldValues[fieldCategory])
             field.innerHTML = `$${formattedValue}`
         }.bind(this))
     }
 
+    // This calculates values for the summary table that are not pulled from the plan object.
     summaryCalculations(plan, weddingDate) {
         let encTotal = 0
         if( plan.encumbrances.length > 0 ){
@@ -93,9 +88,34 @@ class SavingsPage extends PageManager {
         const remainingIncome = plan.income_per_month - encTotal
         const recommendedGoal = Math.ceil(remainingIncome / 2)
         const projectedOnPlan = plan.monthly_savings_goal * this.remainingMonths(weddingDate)
+
+        // Return as an object with keys that correspond to the data-summary-category's in the table.
         return {encTotal, remainingIncome, recommendedGoal, projectedOnPlan}
     }
 
+    // This inserts values into the summary table when encumbrances are updated.
+    // Separate function because not all fields need to be updated, and wedding date is not available.
+    insertSavingsSummaryOnEncEdit(plan) {
+        // Calculate total encumbrances and set value in cell.
+        let encTotal = 0
+        if( plan.encumbrances.length > 0 ){
+            encTotal = plan.encumbrances.map(e => e.amount).reduce((a,c) => a + c)
+        }
+        const totalEncCell = document.querySelector('[data-summary-category = encTotal]')
+        totalEncCell.innerHTML = `$${this.formatCostForDisplay(encTotal)}`
+
+        // Calculate remaining income and set value in cell
+        const remainingIncomeCell = document.querySelector('[data-summary-category = remainingIncome]')
+        const remainingIncome = plan.income_per_month - encTotal
+        remainingIncomeCell.innerHTML = `$${this.formatCostForDisplay(remainingIncome)}`
+
+        // Calculate recommended goal and set value in cell
+        const recommendedGoalCell = document.querySelector('[data-summary-category = recommendedGoal]')
+        const recommendedGoal = Math.ceil(remainingIncome / 2)
+        recommendedGoalCell.innerHTML = `$${this.formatCostForDisplay(recommendedGoal)}`
+    }
+
+    // Calculates the remaining months. Used to calculate future savings on the current plan.
     remainingMonths(weddingDate) {
         const currentMonth = new Date().getMonth();
         const currentYear = new Date().getFullYear();
@@ -169,7 +189,7 @@ class SavingsPage extends PageManager {
 
         const summaryForm = document.getElementById('savingsSummary')
 
-        const [income, monthly_savings_goal] = Array.from(summaryForm.querySelectorAll('input[type="text"]')).map(i => i.value)
+        const [income, monthly_savings_goal] = Array.from(summaryForm.querySelectorAll('input[type="text"]')).map(i => i.value.replace(/[^0-9]/g, ""))
         const id = summaryForm.dataset.savingsId
         const params = {
             savings: {
@@ -177,25 +197,29 @@ class SavingsPage extends PageManager {
             }
         }
 
-        try {
-            const resp = await this.adapter.updateSavings(params)
-            const wedding = await this.adapter.getAsset("wedding")
-            console.log(resp)
-            this.insertSavingsSummary(resp, wedding.date)
+        if(income !== "" && monthly_savings_goal !== "") {
+            try {
+                const resp = await this.adapter.updateSavings(params)
+                const wedding = await this.adapter.getAsset("wedding")
+                console.log(resp)
+                this.insertSavingsSummary(resp, wedding.date)
 
-            // Remove Submit
-            const submitButton = document.getElementById('editSummarySubmit')
-            const buttonRow = submitButton.parentNode
-            buttonRow.removeChild(submitButton)
+                // Remove Submit
+                const submitButton = document.getElementById('editSummarySubmit')
+                const buttonRow = submitButton.parentNode
+                buttonRow.removeChild(submitButton)
 
-            // Add Edit Button
-            const editButton = document.createElement('button')
-            editButton.className = "editValues"
-            editButton.innerText = "Edit Values"
-            buttonRow.appendChild(editButton)
-            this.setEditValuesButtonListener()
-        } catch {
-            console.log(err)
+                // Add Edit Button
+                const editButton = document.createElement('button')
+                editButton.className = "editValues"
+                editButton.innerText = "Edit Values"
+                buttonRow.appendChild(editButton)
+                this.setEditValuesButtonListener()
+            } catch (err) {
+                console.log(err)
+            }
+        } else {
+            this.handleAlert("Fields must not be empty", "danger")
         }
     }
 
@@ -205,29 +229,35 @@ class SavingsPage extends PageManager {
         const eForm = document.getElementById('encumbranceForm')
         const eRows = document.querySelectorAll('#encumbranceTable tr.eLine')
         const params = { encumbrances: { savings_id: eForm.dataset.planId, lines: [] } }
+        let alerted = false
 
         eRows.forEach( row => {
             let encSet = {
                 id: row.dataset.eId,
                 deletable: row.querySelector('[type=checkbox]').checked,
                 encumbrance_name: row.querySelector('.tableText input').value,
-                amount: row.querySelector('.tableNum input').value
+                amount: row.querySelector('.tableNum input').value.replace(/[^0-9]/g, "")
             }
-            params.encumbrances.lines.push(encSet)
+            if(encSet.encumbrance_name === "" || encSet.amount === "") {
+                this.handleAlert("Encumbrance fields must not be empty", "danger")
+                alerted = true
+            } else {
+                params.encumbrances.lines.push(encSet)
+            }
         })
-        
 
-        try {
-            const resp = await this.adapter.editEncumbrances(params)
-            this.encumbrances.insertUpdatedEncumbrances(resp.encumbrances, resp.id)
+        if(alerted) {
+            try {
+                const resp = await this.adapter.editEncumbrances(params)
+                this.encumbrances.insertUpdatedEncumbrances(resp.encumbrances, resp.id)
 
-            // Update summary table
-            this.insertSavingsSummaryOnEncEdit(resp)
-        } catch(err) {
-            console.log(err)
+                // Update summary table
+                this.insertSavingsSummaryOnEncEdit(resp)
+            } catch(err) {
+                console.log(err)
+            }
         }
-
-
+        
 
     }
 

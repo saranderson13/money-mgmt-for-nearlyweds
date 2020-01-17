@@ -1,7 +1,7 @@
 class EncumbranceData extends DataManager {
 
-    constructor(adapter) {
-        super(adapter)
+    constructor(adapter, page) {
+        super(adapter, page)
     }
 
     insertEncumbrances(encumbrances, planId) {
@@ -62,10 +62,6 @@ class EncumbranceData extends DataManager {
         totalEncCell.innerHTML = `$${this.formatCostForDisplay(encTotal)}`
     }
 
-    updateSummaryTotals() {
-
-    }
-
 
     // BUTTON LISTENERS
 
@@ -103,28 +99,31 @@ class EncumbranceData extends DataManager {
         e.preventDefault();
         
         const fields = document.querySelectorAll('#encumbranceForm input')
-        const [encumbrance_name, amount] = Array.from(fields).map(i => i.value)
+        const [encumbrance_name, amount] = Array.from(fields).map(i => i.value.replace(/[^0-9]/g, ""))
         const savings_plan_id = document.querySelector('#encumbranceForm').dataset.planId
-        console.log(savings_plan_id)
-        const params = {
-            encumbrance: {
-                savings_plan_id, encumbrance_name, amount
+        if ([encumbrance_name, amount].some(this.emptyString)) {
+            this.page.handleAlert("Encumbrance fields must not be empty.", "danger")
+        } else {
+            const params = {
+                encumbrance: {
+                    savings_plan_id, encumbrance_name, amount
+                }
             }
-        }
 
-        try {
-            const resp = await this.adapter.addEncumbrance(params)
-            this.clearEncumbrances()
-            this.insertEncumbrances(resp, savings_plan_id)
-            this.resetEncumbranceButtons()
+            try {
+                const resp = await this.adapter.addEncumbrance(params)
+                this.clearEncumbrances()
+                this.insertEncumbrances(resp, savings_plan_id)
+                this.resetEncumbranceButtons()
 
-            // Update summary table
-            const savingsPlan = await this.adapter.getAsset("savings")
-            const wedding = await this.adapter.getAsset("wedding")
-            this.parent.insertSavingsSummary(savingsPlan, wedding.date)
+                // Update summary table
+                const savingsPlan = await this.adapter.getAsset("savings")
+                const wedding = await this.adapter.getAsset("wedding")
+                this.parent.insertSavingsSummary(savingsPlan, wedding.date)
 
-        } catch(err) {
-            console.log(err)
+            } catch(err) {
+                console.log(err)
+            }
         }
     }
 

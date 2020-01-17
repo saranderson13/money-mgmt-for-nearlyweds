@@ -1,7 +1,7 @@
 class ExpenseData extends DataManager {
 
-    constructor(adapter) {
-        super(adapter)
+    constructor(adapter, page) {
+        super(adapter, page)
     }
 
     insertExpenses(expenses) {
@@ -109,29 +109,35 @@ class ExpenseData extends DataManager {
         this.editForm = document.getElementById('editExpenseTable')
 
         // Map all input values to variables
-        const [venue, catering, photography, videography, flowers, cake, attire, band, djmc, invitations, favors, officiant, beauty, jewelry, rentals, other] = Array.from(this.editForm.querySelectorAll('input')).map(i => i.value)
+        const [venue, catering, photography, videography, flowers, cake, attire, band, djmc, invitations, favors, officiant, beauty, jewelry, rentals, other] = Array.from(this.editForm.querySelectorAll('input')).map(i => i.value.replace(/[^0-9]/g, ""))
+        const allFieldValues = [venue, catering, photography, videography, flowers, cake, attire, band, djmc, invitations, favors, officiant, beauty, jewelry, rentals, other]
 
-        // Set expense variable separately because it isn't an input
-        const id = this.editForm.dataset.expenseId
+        if (allFieldValues.some(this.emptyString)) {
+            this.page.handleAlert("Expense Fields must not be empty.", "danger")
+        } else {
+            // Set expense variable separately because it isn't an input
+            const id = this.editForm.dataset.expenseId
 
-        // Define params from variables
-        const params = {
-            expenses: {
-                id, venue, catering, photography, videography, flowers, cake, attire, band, djmc, invitations, favors, officiant, beauty, jewelry, rentals, other
+
+
+            // Define params from variables
+            const params = {
+                expenses: {
+                    id, venue, catering, photography, videography, flowers, cake, attire, band, djmc, invitations, favors, officiant, beauty, jewelry, rentals, other
+                }
+            }
+
+            // Attempt PATCH request
+            try {
+                const resp = await this.adapter.updateExpenses(params)
+                // reload values
+                this.insertUpdatedExpenses(resp)
+                // reset edit button
+            } catch(err) {
+                console.log(err)
+                this.handleAlert(err, 'danger')
             }
         }
-
-        // Attempt PATCH request
-        try {
-            const resp = await this.adapter.updateExpenses(params)
-            // reload values
-            this.insertUpdatedExpenses(resp)
-            // reset edit button
-        } catch(err) {
-            console.log(err)
-            // this.handleAlert(err, 'danger')
-        }
-        // console.log(params)
     }
 
 }
