@@ -40,9 +40,18 @@ class SavingsPage extends PageManager {
             this.encumbrances.insertEncumbrances(savingsPlan.encumbrances, savingsPlan.id);
             this.insertSavingsIdToForms(savingsPlan)
             this.insertSavingsSummary(savingsPlan, wedding.date);
+            this.insertUserName(wedding.users, savingsPlan.user_id);
         } catch(err) {
             this.handleAuthorizationError(err)
         }
+    }
+
+    insertUserName(users, user_id) {
+        const planTitle = document.getElementById('planName');
+        const user = users.find( (user) => {
+            return user.id == user_id
+        })
+        planTitle.innerHTML = `Savings Plan for ${user.first_name}`
     }
 
     // This is to make sure submitted forms will pass the savings plan to the backend.
