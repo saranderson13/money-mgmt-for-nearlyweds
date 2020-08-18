@@ -96,7 +96,6 @@ class SavingsPage extends PageManager {
         const remainingIncome = plan.income_per_month - encTotal
         const recommendedGoal = Math.ceil(remainingIncome / 2)
         const projectedOnPlan = plan.monthly_savings_goal * this.remainingMonths(weddingDate)
-
         // Return as an object with keys that correspond to the data-summary-category's in the table.
         return {encTotal, remainingIncome, recommendedGoal, projectedOnPlan}
     }
@@ -129,7 +128,9 @@ class SavingsPage extends PageManager {
         const currentYear = new Date().getFullYear();
         const weddingMonth = new Date(weddingDate.split(".")[0]).getMonth()
         const weddingYear = new Date(weddingDate.split(".")[0]).getFullYear()
-        if(currentYear !== weddingYear) {
+        if(currentMonth > weddingMonth && currentYear !== weddingYear) {
+            return 12 - currentMonth + weddingMonth - 1
+        } else if(currentYear !== weddingYear) {
             return ((weddingYear - currentYear) * 12) + weddingMonth
         } else {
             return weddingMonth - currentMonth
@@ -282,7 +283,7 @@ class SavingsPage extends PageManager {
                 <!-- Begin Top Section - savings plan info -->
                 <div id="savingsInfoContainer">
                     <div id="planName">
-                        Savings Plan for Sarah
+                        
                     </div>
                 </div>
             </div>

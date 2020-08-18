@@ -49,7 +49,9 @@ class PageManager {
         const currentYear = new Date().getFullYear();
         const weddingMonth = new Date(weddingDate.split(".")[0]).getMonth()
         const weddingYear = new Date(weddingDate.split(".")[0]).getFullYear()
-        if(currentYear !== weddingYear) {
+        if(currentMonth > weddingMonth && currentYear !== weddingYear) {
+            return 12 - currentMonth + weddingMonth - 1
+        } else if(currentYear !== weddingYear) {
             return ((weddingYear - currentYear) * 12) + weddingMonth
         } else {
             return weddingMonth - currentMonth
